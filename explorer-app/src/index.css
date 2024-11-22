@@ -1,0 +1,80 @@
+/* DS sans Thin */
+@font-face {
+  font-family: "DS sans";
+  font-style: normal;
+  font-weight: 100;
+  font-display: swap;
+  src: url("./assets/fonts/DMSans-Thin.ttf") format("truetype");
+}
+
+/* DS sans ExtraLight */
+@font-face {
+  font-family: "DS sans";
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
+  src: url("./assets/fonts/DMSans-ExtraLight.ttf") format("truetype");
+}
+
+/* DS sans Light */
+@font-face {
+  font-family: "DS sans";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("./assets/fonts/DMSans-Light.ttf") format("truetype");
+}
+
+/* DS sans Regular */
+@font-face {
+  font-family: "DS sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("./assets/fonts/DMSans-Regular.ttf") format("truetype");
+}
+
+/* DS sans Medium */
+@font-face {
+  font-family: "DS sans";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("./assets/fonts/DMSans-Medium.ttf") format("truetype");
+}
+
+/* DS sans SemiBold */
+@font-face {
+  font-family: "DS sans";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("./assets/fonts/DMSans-SemiBold.ttf") format("truetype");
+}
+
+/* DS sans Bold */
+@font-face {
+  font-family: "DS sans";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("./assets/fonts/DMSans-Bold.ttf") format("truetype");
+}
+
+/* DS sans ExtraBold */
+@font-face {
+  font-family: "DS sans";
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("./assets/fonts/DMSans-ExtraBold.ttf") format("truetype");
+}
+
+/* DS sans Black */
+@font-face {
+  font-family: "DS sans";
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("./assets/fonts/DMSans-Black.ttf") format("truetype");
+}
