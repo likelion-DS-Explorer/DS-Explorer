@@ -8,23 +8,23 @@ npm install slick-carousel
 import React from "react";
 import styled from "styled-components";
 import Header from "../components/Header";
-import NoticeDetailComponent from "../components/NoticeDetailComponent";
+import RecruitDetailComponent from "../components/RecruitDetailComponent";
 
-const Content = styled.div `
+const Content = styled.div`
   display: flex;
   justify-content: center;
-  flex-direction: column; 
+  flex-direction: column;
 `;
 
-function NoticeDetail() {
+function RecruitDetail() {
   return (
     <>
-      <Header type="default" />  
+      <Header type="default" />
       <Content>
-        <NoticeDetailComponent />
+        <RecruitDetailComponent />
       </Content>
     </>
   );
 }
 
-export default NoticeDetail;
+export default RecruitDetail;

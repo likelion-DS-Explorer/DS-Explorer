@@ -4,11 +4,11 @@ import palette from "../lib/colorPalette";
 
 const Box = styled.div`
   background-color: #0b0b20;
-  height: 354px;
+  height: 234px;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  padding: 120px 900px 0px 120px;
+  padding: 120px 800px 0px 100px;
   justify-content: space-around;
 `;
 

@@ -31,14 +31,14 @@ const EditInfo = styled.form`
 const PersonalInfo = styled.div`
   width: 906px;
   display: flex;
-  flex-wrap: wrap; 
-  gap: 24px; 
+  flex-wrap: wrap;
+  gap: 24px;
   margin-top: 61px;
 `;
 
 const InputBlock = styled.div`
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   align-items: flex-start;
   flex: 1 1 calc(33.333% - 24px); /* 3개씩 배치되도록 너비 설정 (20px은 간격을 고려한 값) */
   min-width: 200px; /* 최소 너비를 설정하여 너무 좁아지지 않게 */
@@ -56,7 +56,7 @@ const Input = styled.input`
   width: 266px;
   height: 48px;
   border-radius: 6px;
-  border: 1px solid #4B67D850;
+  border: 1px solid #4b67d850;
   background-color: #ffffff00;
   color: #ffffff;
   font-size: 18px;
@@ -75,7 +75,7 @@ const LabelStrong = styled.span`
 
 const InputLong = styled(Input)`
   width: 906px;
-`
+`;
 
 const Submit = styled.button`
   width: 179px;
@@ -84,13 +84,13 @@ const Submit = styled.button`
   border-radius: 4px;
   color: white;
   font-size: 17.58px;
-  background-color: #5E89E2;
+  background-color: #5e89e2;
 `;
 
-function MypageEdit() {
+function ProfileEdit() {
   return (
     <>
-      <Header type="default" />  
+      <Header type="default" />
       <Content>
         <Title>회원정보</Title>
         <RecentEdit>최근 수정일 ~~</RecentEdit>
@@ -122,11 +122,13 @@ function MypageEdit() {
             </InputBlock>
           </PersonalInfo>
           <ClubInfo>
-          <InputBlock>
-              <Label htmlFor="club"><LabelStrong>운영진이신가요?</LabelStrong> 운영진이라면 소속 동아리명을 작성해 주세요. 모집 공고와 활동 소식 작성 권한이 부여됩니다.</Label>
+            <InputBlock>
+              <Label htmlFor="club">
+                <LabelStrong>운영진이신가요?</LabelStrong> 운영진이라면 소속 동아리명을 작성해 주세요. 모집 공고와 활동 소식 작성 권한이 부여됩니다.
+              </Label>
               <InputLong type="text" name="club" />
-            </InputBlock> 
-          </ClubInfo> 
+            </InputBlock>
+          </ClubInfo>
           <Submit type="submit">회원정보 수정</Submit>
         </EditInfo>
       </Content>
@@ -134,4 +136,4 @@ function MypageEdit() {
   );
 }
 
-export default MypageEdit;
+export default ProfileEdit;

@@ -18,6 +18,14 @@ import miniLogo1 from "../img/mini_logo1.png";
 import miniLogo2 from "../img/mini_logo2.png";
 import miniLogo3 from "../img/mini_logo3.png";
 import backgroundImage from "../img/stars_bg.png";
+import animation from "../img/Animation.webm";
+import back1 from "../img/back1.png";
+import back2 from "../img/back2.png";
+import back3 from "../img/back3.png";
+import back4 from "../img/back4.png";
+import back5 from "../img/back5.png";
+import back6 from "../img/back6.png";
+import back7 from "../img/back7.png";
 
 const Section1 = styled.div`
   display: flex;
@@ -51,7 +59,7 @@ const Button = styled.div`
   align-items: center;
   justify-content: center;
   color: ${palette.white};
-  background-color: #5e89e2;
+  background-color: ${palette.button};
   width: 282px;
   height: 48px;
   border-radius: 5px;
@@ -62,6 +70,24 @@ const Button = styled.div`
 const Right = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+const VideoBackground = styled.video`
+  position: absolute;
+  top: 200px;
+  right: 100px;
+  width: 40%;
+  height: 60%;
+  object-fit: cover;
+  z-index: 1; /* 뒤로 보내기 */
+`;
+
+const OverlayContainer = styled.div`
+  z-index: 2;
+`;
+
+const OverlayImage = styled.img`
+  position: absolute;
 `;
 
 const Section2 = styled.div`
@@ -149,7 +175,20 @@ function Main() {
             탐험하기
           </Button>
         </Left>
-        <Right>사진들</Right>
+        <Right>
+          <VideoBackground autoPlay muted loop>
+            <source src={animation} type="video/webm" />
+          </VideoBackground>
+          <OverlayContainer>
+            <OverlayImage src={back1} alt="back1" style={{ top: "107px", right: "285px" }} />
+            <OverlayImage src={back2} alt="back2" style={{ top: "184px", right: "120px" }} />
+            <OverlayImage src={back3} alt="back3" style={{ top: "317px", right: "200px" }} />
+            <OverlayImage src={back4} alt="back4" style={{ top: "217px", right: "30px" }} />
+            <OverlayImage src={back5} alt="back5" style={{ top: "373px", right: "60px" }} />
+            <OverlayImage src={back6} alt="back6" style={{ top: "512px", right: "150px" }} />
+            <OverlayImage src={back7} alt="back7" style={{ top: "765px", right: "260px" }} />
+          </OverlayContainer>
+        </Right>
       </Section1>
       <Section2>
         <Box>

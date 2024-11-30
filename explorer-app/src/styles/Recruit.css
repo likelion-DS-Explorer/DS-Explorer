@@ -1,0 +1,201 @@
+.notice-page {
+  display: flex;
+  padding: 70px 0;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.filter-container {
+  width: 200px;
+  margin-right: 200px;
+}
+
+.notice-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.notice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 335px);
+  gap: 40px;
+  margin-bottom: 20px;
+}
+
+.notice-item {
+  width: 300px;
+  height: 270px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  margin: 10px;
+  color: #fff;
+}
+
+.notice-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.notice-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.notice-club-name {
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.notice-deadline {
+  font-size: 10px;
+  font-weight: bold;
+  color: #5e89e2;
+}
+
+.notice-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 5px;
+  text-align: left;
+}
+
+/* Pagination 스타일 */
+.pagination {
+  margin: 50px 0;
+  display: flex;
+  justify-content: center;
+  gap: 2px; /* 번호 간 간격 최소화 */
+}
+
+.pagination button,
+.page-number {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #121212;
+  background-color: #121212; /* 배경 검정색 */
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  display: flex;
+  justify-content: center; /* 가로 중앙 정렬 */
+  align-items: center; /* 세로 중앙 정렬 */
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.page-number:hover,
+.pagination button:hover {
+  background-color: #0070f3; /* 호버 시 파란색 배경 */
+}
+
+.page-number.active {
+  background-color: #0070f3;
+  color: white;
+  box-shadow: 0 0 5px white; /* 선택된 버튼에 흰색 쉐도우 */
+}
+
+.pagination button:disabled {
+  background-color: #222; /* 비활성화된 버튼 */
+  cursor: not-allowed;
+}
+
+.filter-box {
+  width: 200px;
+  color: #fff;
+  font-family: "Arial", sans-serif;
+}
+
+.filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.filter-title {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.reset-button {
+  font-size: 14px;
+  font-weight: 500;
+  color: #5e89e2;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.divider {
+  border: 0.5px solid rgba(255, 255, 255, 0.5);
+  margin: 10px 0;
+}
+
+.checkbox-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.checkbox-label {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.checkbox {
+  margin-right: 10px;
+  accent-color: #5e89e2;
+}
+
+.total-count {
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.sort-section {
+  margin-top: 20px;
+}
+
+.sort-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.sort-title {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.sort-toggle {
+  font-size: 16px;
+  font-weight: 400;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.radio-group label {
+  font-size: 14px;
+  font-weight: 400;
+  text-align: left;
+}

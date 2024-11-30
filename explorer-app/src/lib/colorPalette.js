@@ -1,6 +1,6 @@
 const palette = {
   background: "#09091A",
-  color2: "#CDAECD",
+  button: "#5E89E2",
   color3: "#6A226D",
   white: "#fff",
   shadow: "#3989C6",
