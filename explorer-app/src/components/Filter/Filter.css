@@ -1,0 +1,139 @@
+.filter-box {
+    width: 200px;
+    color: #fff;
+    font-family: "Arial", sans-serif;
+  }
+  
+  .filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .filter-title {
+    font-size: 15px;
+    font-weight: 500;
+  }
+  
+  .reset-button {
+    font-size: 14px;
+    font-weight: 500;
+    color: #fff;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .divider {
+    border: 0.5px solid rgba(255, 255, 255, 0.5);
+    margin: 10px 0;
+  }
+  
+  .checkbox-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+  }
+  
+  .checkbox-label {
+    font-size: 14px;
+    font-weight: 400;
+  }
+  
+  .checkbox {
+    width: 12px;
+    height: 12px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+    margin-right: 10px;
+    transform: scale(1.5); /* 체크박스 크기 증가 */
+  }
+
+  .checkbox:checked {
+    background-color: #f5a524;
+    border-color: #f5a524;
+  }
+  
+  .total-count {
+    font-size: 12px; /* 숫자 크기 작게 */
+    font-weight: normal; /* 굵기 낮춤 */
+  }
+  
+  .sort-section {
+    margin-top: 20px;
+  }
+  
+  .sort-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .sort-title {
+    font-size: 15px;
+    font-weight: 500;
+  }
+  
+  .sort-toggle img {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .radio-group label {
+    display: flex;
+    align-items: center;
+    font-size: 12px; /* 텍스트 크기 작게 */
+    font-weight: 400;
+  }
+  
+  .radio-input {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    background-color: #fff;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  .radio-input:checked {
+    background-color: #f5a524;
+    border-color: #f5a524;
+  }
+  
+  .radio-input:checked::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background-color: #fff;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .radio-group span:first-child {
+    font-size: 14px; /* 텍스트 크기 */
+    font-weight: bold;
+  }
+  
+  .radio-group span:last-child {
+    font-size: 12px; /* 숫자 크기 */
+    font-weight: normal; /* 숫자 굵기 낮춤 */
+    margin-left: 5px;
+  }
+   

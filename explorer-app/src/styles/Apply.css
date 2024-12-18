@@ -1,0 +1,146 @@
+.application-status-page {
+    display: flex;
+    justify-content: center; /* 가로 정렬 중앙 */
+    align-items: flex-start; /* 세로 정렬 상단 */
+    padding: 50px 20px;
+  }
+  
+  .application-status-container {
+    width: 1000px;
+    min-height: 700px;
+    border-radius: 25px;
+    background-color: rgba(255, 255, 255, 0.4);
+    padding: 50px; /* 패딩값 추가 */
+    color: #fff;
+    position: relative;
+    margin-top: 50px;
+  }
+  
+  .header-section {
+    display: flex;
+    align-items: center; /* 수평 정렬 */
+  }
+
+  .header-img{
+    margin-right: 20px ;
+  }
+  
+  .header-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-right: 20px;
+  }
+  
+  .header-count {
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.4);
+  }
+  
+  .description-section {
+    margin-top: 20px;
+  }
+  
+  .description {
+    font-size: 15px;
+    font-weight: 500;
+    text-align: left; /* 왼쪽 정렬 */
+    margin: 10px 0;
+  }
+  
+  .divider-thick {
+    margin: 30px 0;
+    border: none;
+    height: 2px;
+    background-color: #fff;
+  }
+  
+  .table-header {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr 1fr;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  
+  .divider-thin {
+    border: none;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.7);
+    margin-top: 30px; /* 구분선과 데이터 간격 */
+  }
+  
+  .table-row {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr 1fr;
+    font-size: 15px;
+    font-weight: 500;
+    color: #fff;
+    align-items: center;
+    text-align: center;
+    padding: 30px 0; /* 행 내부 패딩 */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4); /* 행 구분선 */
+  }
+  
+  .table-row:last-child {
+    border-bottom: none; /* 마지막 행 구분선 제거 */
+  }
+  
+  .club-details {
+    display: flex;
+    flex-direction: column;
+    text-align: left; /* 왼쪽 정렬 */
+    padding-left: 10px; /* 패딩 추가 */
+  }
+  
+  .regular-text {
+    font-size: 14px;
+    font-weight: 400;
+  }
+  
+  .semibold-text {
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 5px; /* 공고 제목과 동아리명 간격 */
+  }
+  
+  .medium-text {
+    font-size: 15px;
+    font-weight: 500;
+  }
+  
+  .status-pagination {
+    margin-top: 30px; /* 페이징과 데이터 간격 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* 버튼 간 간격 */
+  }
+  
+  .nav-button {
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    transition: color 0.3s ease;
+  }
+  
+  .nav-button:disabled {
+    color: rgba(255, 255, 255, 0.3);
+    cursor: not-allowed;
+  }
+  
+  .nav-button:hover:not(:disabled) {
+    color: #f0f0f0;
+  }
+  
+  .status-page-text {
+    font-size: 14px;
+    color: #fff;
+  }
+  

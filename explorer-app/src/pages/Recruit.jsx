@@ -1,48 +1,51 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Header from "../components/Header";
 import NoticeItem from "../components/NoticeItem";
 import Filter from "../components/Filter/Filter";
 import "../styles/Recruit.css";
-import exampleImage from "../img/scrapExample.png";
 
-function Recuit() {
-  // 100개의 데이터를 생성하여 총 100개로 구성
-  const allNotices = Array.from({ length: 100 }, (_, index) => ({
-    image: exampleImage,
-    clubName: `동아리 ${index + 1}`,
-    deadline: `D-${(index % 10) + 1}`,
-    title: `동아리 ${index + 1} 모집 안내`,
-  }));
+function Recruit() {
+  const [recruitData, setRecruitData] = useState([]); // API에서 가져올 데이터
+  const [loading, setLoading] = useState(true); // 로딩 상태
+  const [error, setError] = useState(null); // 에러 상태
+  const [currentPage, setCurrentPage] = useState(0); // 현재 페이지
+  const itemsPerPage = 8; // 페이지당 아이템 수
 
-  const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 8;
-  const totalPages = Math.ceil(allNotices.length / itemsPerPage);
-  const [pageRangeStart, setPageRangeStart] = useState(0); // 페이지 번호 시작 인덱스
+  // API 호출
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/recruit/");
+        setRecruitData(response.data.result); // API에서 result 키의 데이터를 가져옴
+      } catch (err) {
+        console.error("API 호출 에러:", err);
+        setError("모집 공고 데이터를 불러오지 못했습니다.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
 
-  const currentItems = allNotices.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
+  // 데이터가 비었을 때도 기본 UI 표시
+  const totalPages = Math.ceil(Math.max(recruitData.length, 1) / itemsPerPage); // 최소 1페이지
+  const currentItems = recruitData.slice(
+    currentPage * itemsPerPage,
+    (currentPage + 1) * itemsPerPage
+  );
 
-  const handlePageClick = (pageIndex) => {
-    setCurrentPage(pageIndex);
-  };
-
-  const handlePrevRange = () => {
-    if (pageRangeStart > 0) {
-      setPageRangeStart(pageRangeStart - 10);
-    }
-  };
-
-  const handleNextRange = () => {
-    if (pageRangeStart + 10 < totalPages) {
-      setPageRangeStart(pageRangeStart + 10);
-    }
-  };
+  const handlePageClick = (pageIndex) => setCurrentPage(pageIndex); // 페이지 변경 핸들러
 
   const renderPageNumbers = () => {
     const pages = [];
-    const rangeEnd = Math.min(pageRangeStart + 10, totalPages);
-    for (let i = pageRangeStart; i < rangeEnd; i++) {
+    for (let i = 0; i < totalPages; i++) {
       pages.push(
-        <button key={i} onClick={() => handlePageClick(i)} className={`page-number ${currentPage === i ? "active" : ""}`}>
+        <button
+          key={i}
+          onClick={() => handlePageClick(i)}
+          className={`page-number ${currentPage === i ? "active" : ""}`}
+        >
           {i + 1}
         </button>
       );
@@ -56,7 +59,7 @@ function Recuit() {
       <div className="notice-page">
         <div className="filter-container">
           <Filter
-            totalNotices={allNotices.length}
+            totalNotices={recruitData.length || 0}
             onReset={() => console.log("초기화")}
             onSortChange={(e) => console.log("정렬 변경:", e.target.value)}
             onFilterChange={(e) => console.log("필터 변경:", e.target.checked)}
@@ -64,18 +67,27 @@ function Recuit() {
         </div>
         <div className="notice-content">
           <div className="notice-grid">
-            {currentItems.map((item, index) => (
-              <NoticeItem key={index} image={item.image} clubName={item.clubName} deadline={item.deadline} title={item.title} />
-            ))}
+            {loading ? (
+              <div>로딩 중입니다...</div>
+            ) : error ? (
+              <div>{error}</div>
+            ) : recruitData.length > 0 ? (
+              currentItems.map((item) => (
+                <NoticeItem
+                  key={item.id}
+                  image={item.images.length > 0 ? item.images[0].image_url : "https://via.placeholder.com/150"}
+                  clubName={item.club_code || "동아리"}
+                  deadline={`D-${item.d_day}`}
+                  title={item.title}
+                />
+              ))
+            ) : (
+              <div>모집 공고가 없습니다.</div>
+            )}
           </div>
+          {/* 페이지네이션 */}
           <div className="pagination">
-            <button onClick={handlePrevRange} disabled={pageRangeStart === 0}>
-              &lt;
-            </button>
             {renderPageNumbers()}
-            <button onClick={handleNextRange} disabled={pageRangeStart + 10 >= totalPages}>
-              &gt;
-            </button>
           </div>
         </div>
       </div>
@@ -83,4 +95,4 @@ function Recuit() {
   );
 }
 
-export default Recuit;
+export default Recruit;

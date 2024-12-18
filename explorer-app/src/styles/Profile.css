@@ -1,0 +1,240 @@
+.mypage {
+    display: flex;
+    padding: 70px 200px;
+  }
+  
+  .profile-box {
+    width: 240px;
+    height: 480px;
+    border: 1px solid rgba(75, 103, 216, 0.5);
+    border-radius: 10px;
+    padding: 50px;
+    margin-right: 100px;
+    position: relative;
+  }
+  
+  .profile-settings {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 24px;
+    height: auto;
+  }
+  
+  .profile-image {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    margin: 20px auto;
+  }
+  
+  .profile-name {
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+  }
+  
+  .profile-info {
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+  }
+  
+  .profile-stats {
+    margin-top: 50px;
+  }
+  
+  .stat-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    justify-content: center;
+    padding: 0 30px;
+  }
+  
+  .stat-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+  }
+  
+  .stat-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+  }
+  
+  .register-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px; /* 버튼 간 간격 */
+    margin: 40px 0;
+  }
+  
+  .register-post-button {
+    width: 120px; /* 버튼 크기를 반으로 줄임 */
+    height: 40px;
+    background-color: rgb(245, 165, 36, 0.2);
+    color: #F5A524;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+  }
+  
+  .edit-post-button {
+    width: 120px; 
+    height: 40px;
+    border: 2px solid #F5A524;
+    color: #F5A524;
+    background-color: black;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+  }
+  
+  .register-popup {
+    position: absolute; 
+    top: 100%; 
+    left: 50%; 
+    transform: translateX(-50%);
+    background-color: rgba(255, 255, 255, 0.35);
+    width: 360px;
+    padding: 30px 30px;
+    border-radius: 20px;
+    opacity: 0; 
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+  }
+  
+  .register-popup.visible {
+    opacity: 1; 
+    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
+  }
+  
+  .popup-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .popup-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+  }
+  
+  .popup-content {
+    text-align: left; 
+  }
+  
+  .popup-content h3 {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  
+  .popup-content p {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 15px;
+    font-weight: 400;
+  }
+  
+  .content-container {
+    flex-grow: 1;
+  }
+  
+  .section-container {
+    margin-bottom: 20px;
+  }
+  
+  .section-header {
+    display: flex;
+    align-items: center;
+  }
+  
+  .section-icon {
+    margin-right: 10px;
+  }
+  
+  .section-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+  }
+  
+  .scroll-container {
+    display: flex;
+    overflow-x: auto; /* 가로 스크롤 활성화 */
+    width: 760px; /* 한 번에 4개의 아이템 보이도록 설정 (180px x 4 + gap 20px x 3) */
+    height: auto; /* 높이는 아이템 내용에 따라 */
+    border: 1px solid rgba(75, 103, 216, 0.5);
+    padding: 15px; /* 자연스러운 여백 */
+    border-radius: 10px;
+    gap: 20px; /* 아이템 간 간격 */
+  }
+  
+  .scroll-container::-webkit-scrollbar {
+    height: 8px; /* 스크롤바 높이 */
+  }
+  
+  .scroll-container::-webkit-scrollbar-thumb {
+    background-color: #ccc; /* 스크롤바 색상 */
+    border-radius: 4px; /* 스크롤바 둥근 모서리 */
+  }
+  
+  .scroll-container::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* 스크롤 트랙 색상 */
+  }
+  
+  .scrap-announcement-item, .favorite-club-item {
+    flex: 0 0 180px; /* 각 아이템의 고정 너비 */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* 텍스트를 왼쪽 정렬 */
+    text-align: left; /* 텍스트 정렬 */
+    color: #fff; /* 글씨 색상 흰색 */
+    padding: 10px;
+  }
+  
+  .scrap-announcement-item img {
+    width: 180px; 
+    height: 180px; 
+    object-fit: cover; 
+    border-radius: 10px;
+    margin-bottom: 10px; 
+  }
+  
+  .favorite-club-item img {
+    width: 160px; 
+    height: 140px; 
+    object-fit: cover; 
+    border-radius: 50%;
+    margin-bottom: 10px; 
+  }
+  
+  .scrap-title, .favorite-club-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    margin: 5px 0;
+  }
+  
+  .club-name, .favorite-description {
+    font-size: 15px;
+    font-weight: 500;
+    color: #fff;
+    margin: 0;
+  }
+  
