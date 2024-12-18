@@ -1,6 +1,13 @@
+@font-face {
+  font-family: 'DMSansBlack'; 
+  src: url('../assets/fonts/DMSans-Black.ttf') format('truetype'); 
+  font-style: normal;
+}
+
 body {
   background-color: #0b0b20;
   color: #ffffff;
+  font-family: 'DMSansBlack', sans-serif;
 }
 
 .notification {
@@ -8,6 +15,7 @@ body {
   padding-bottom: 61px;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .proPic {
@@ -44,10 +52,13 @@ body {
 }
 
 .dDay {
-  width: 119px;
+  width: 95px;
   height: 28px;
-  background-color: #72add916;
-  border-radius: 5px;
+  color: #006FEE;
+  font-size: 12px;
+  font-weight: bold;
+  background-color: #006FEE20;
+  display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 6px;
@@ -112,10 +123,11 @@ body {
 .hashtag {
   text-align: center;
   align-items: center;
-  border: 1px solid #4b67d850;
-  border-radius: 27px;
+  border: 1px solid #006FEE;
+  color: #006FEE;
+  border-radius: 8px;
   padding: 2px 12px;
-  background-color: #72add916;
+  background-color: none;
   font-size: 13.9px;
   margin-right: 10px;
 }
@@ -129,33 +141,55 @@ body {
 }
 
 .btnDiv {
+  width: 90%;
+  margin: 0 auto;
   margin-top: 84px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
+}
+
+.applyBtn, .detailBtn {
+  width: 216px;
+  height: 48px;
+  font-size: 16px;
+  border-radius: 8px;
+  text-align: center;
+  align-items: center;
+  color: #F5A524;
+  font-weight: bold;
+}
+
+.detailBtn {
+  background-color: #F5A52420;
+  border: none;
 }
 
 .applyBtn {
-  width: 402px;
-  height: 56px;
-  border-radius: 3px;
-  text-align: center;
-  align-items: center;
-  border: 0;
-  background-color: #5e89e2;
-  color: #ffffff;
+  background-color: #F5A52400;
+  border: 1px solid #F5A524;
 }
 
-.likeBtn,
 .bookmarkBtn {
-  width: 56px;
-  height: 56px;
+  width: 48px;
+  height: 48px;
   justify-content: center;
   align-items: center;
-  background-color: #ffffff00;
-  border-color: #ffffff;
+  background-color: #F5A52420;
+  border-color: #F5A524;
   border-radius: 3px;
 }
 
-.btnDiv button {
-  margin-right: 8px;
+.applyBtn:hover {
+  background-color: #F5A52470;
+  border: none;
+}
+
+.detailBtn:hover {
+  background-color: #F5A52470;
+}
+
+.bookmarkBtn:hover {
+  background-color: #F5A52470;
+  border-color: #F5A524;
 }

@@ -3,8 +3,10 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import exploreBtn from "../img/exploreBtn.png";
+import backBtn from "../img/backBtn.png";
 
 const Content = styled.div`
+  font-family: 'DMSansMedium', sans-serif;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -37,11 +39,30 @@ const Input1Div = styled.div`
   display: flex;
 `;
 
+const EmailDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 461px;
+  overflow-x: visible;
+  margin-bottom: 70px;
+`;
+
 const Warning = styled.p`
   font-size: 13.45px;
   font-weight: 400;
+  margin: 0;
   margin-top: 10px;
-  color: #ffffff80;
+  width: 600px;
+  text-align: left;
+  color: #F31260;
+`;
+
+const Warning2 = styled(Warning)`
+  width: 390px;
+`
+
+const Comment = styled(Warning2)`
+  color: #ffffff;
 `;
 
 const InputInfo = styled.form`
@@ -79,13 +100,12 @@ const Input1 = styled.input`
   width: 286px;
   height: 48px;
   border-radius: 6px;
-  border: 1px solid #4b67d850;
+  border: 1px solid #0070F3;
   background-color: #ffffff00;
   color: #ffffff;
   font-size: 18px;
   font-weight: 600;
   padding-left: 24px;
-  margin-bottom: 70px;
 `;
 
 const Input2 = styled(Input1)`
@@ -106,28 +126,60 @@ const InputLong = styled(Input2)`
   width: 906px;
 `;
 
+const InputDiv = styled.div`
+`;
+
+const BtnDiv = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+`;
+
 const Button = styled.button`
   width: 118px;
   height: 48px;
   border: none;
   border-radius: 4px;
-  color: white;
-  letter-spacing: -0.7px;
-  font-size: 17.58px;
-  background-color: #5e89e2;
+  color: #F5A524;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #F5A52420;
   margin-left: 29px;
+
+   &:hover {
+    background-color: #F5A52470;
+    cursor: pointer; 
+  }
 `;
 
 const Submit = styled(Button)`
-  width: 179px;
+  width: 216px;
+  background-color: #F5A52400;
+  border-radius: 8px;
+  border: 2px solid #F5A524;
+  margin: 0;
+`;
+
+const Back = styled(Button)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+`;
+
+const BtnBlk = styled.div`
+  width: 118px;
+`
+
+const ButtonName = styled.p`
   margin: 0;
 `;
 
 /* Modal */
 const Modal = styled.div`
-  background-color: #ffffff90;
-  width: 788px;
-  height: 465px;
+  background-color: #FFFFFF40;
+  width: 1204px;
+  height: 418px;
   border-radius: 30px;
   box-shadow: 20px 20px 60px #27add950;
   display: flex;
@@ -150,30 +202,38 @@ const ModalDetail = styled.p`
 
 const ModalBtnDiv = styled.div`
   margin-top: 25px;
+  display: flex;
 `;
 
 const ModalBtn = styled.button`
   width: 186px;
-  height: 76px;
-  border-radius: 47.27px;
+  height: 75px;
+  border-radius: 8px;
   font-size: 20px;
-  font-weight: 700;
-  color: #ffffff;
-  background-color: #5e89e2;
-  border: none;
+  font-weight: bold;
+  color: #F5A524;
+  background-color: #F5A52420;
+  border: 2px solid #F5A524;
   align-text: center;
   align-items: center;
+  display: flex;
+  justify-content: center;
+
+   &:hover {
+    background-color: #F5A52470;
+    cursor: pointer; 
+  }
 `;
 
 const ModalBtn2 = styled(ModalBtn)`
-  margin-left: 14.21px;
-  color: #5e89e2;
-  border: 1.5px solid #5e89e2;
+  margin-left: 20px;
   background-color: #ffffff00;
 `;
 
-function Signup(props) {
+function Register(props) {
   const [page, setPage] = useState(1);
+  const [flag, setFlag] = useState(0);
+  const [flag2, setFlag2] = useState(0);
   const navigate = useNavigate();
 
   const goToNextPage = () => {
@@ -185,11 +245,15 @@ function Signup(props) {
   };
 
   const handleExplore = () => {
-    navigate("/explore"); // 탐험 페이지로 이동
+    navigate("/"); // 탐험 페이지로 이동
   };
 
   const handleLogin = () => {
-    navigate("/login"); // 로그인 페이지로 이동
+    navigate("/users/login"); // 로그인 페이지로 이동
+  };
+
+  const handleBackToPage1 = () => {
+    setPage(1);
   };
 
   return (
@@ -203,11 +267,14 @@ function Signup(props) {
             <EmailPW>
               <InputBlock>
                 <Label>이메일을 입력해 주세요</Label>
-                <Input1Div>
+                <EmailDiv>
+                  <Input1Div>
                   <Input1 type="email" name="email" />
                   <Button type="button">중복 확인하기</Button>
-                  <Warning></Warning>
-                </Input1Div>
+                  </Input1Div>
+                  {flag === 1 && (<Warning>입력하신 이메일은 이미 계정에 연결되어 있습니다. 로그인하시거나 비밀번호를 재설정해 주세요.</Warning>)}
+                  {flag === 2 && (<Comment>사용 가능한 계정입니다. </Comment>)}
+                </EmailDiv>
               </InputBlock>
               <InputBlock>
                 <Label>비밀번호를 입력해 주세요</Label>
@@ -223,6 +290,7 @@ function Signup(props) {
 
           {page === 2 && (
             <>
+            <InputDiv>
               <PersonalInfo>
                 <InputBlock>
                   <Label htmlFor="name">이름</Label>
@@ -239,7 +307,7 @@ function Signup(props) {
                 <InputBlock>
                   <Label htmlFor="nickname">닉네임</Label>
                   <Input2 type="text" name="nickname" />
-                  <Warning></Warning>
+                  {flag2 === 1 && (<Warning2>이 닉네임은 이미 사용 중입니다. 다른 닉네임을 선택해 주세요.</Warning2>)}
                 </InputBlock>
                 <InputBlock>
                   <Label htmlFor="phone">전화번호</Label>
@@ -255,9 +323,18 @@ function Signup(props) {
                   <InputLong type="text" name="club" />
                 </InputBlock>
               </ClubInfo>
-              <Submit type="button" onClick={handleSignup}>
-                회원가입
-              </Submit>
+              </InputDiv>
+              <BtnDiv>
+                <Back type="button" onClick={handleBackToPage1}>
+                  <img src={backBtn} alt="이전" />
+                  <ButtonName>이전</ButtonName>
+                </Back>
+                <Submit type="button" onClick={handleSignup}>
+                  회원가입
+                </Submit>
+                <BtnBlk></BtnBlk>
+              </BtnDiv>
+              
             </>
           )}
         </InputInfo>
@@ -268,7 +345,7 @@ function Signup(props) {
             <ModalDetail>승인은 3일 이내에 완료되며, 그 후 서비스 이용이 가능합니다.</ModalDetail>
             <ModalBtnDiv>
               <ModalBtn onClick={handleExplore}>
-                <img src={exploreBtn} alt="탐험하기" /> 탐험하기
+                <img src={exploreBtn} alt="탐험하기" /><ButtonName>탐험하기</ButtonName>
               </ModalBtn>
               <ModalBtn2 onClick={handleLogin}>로그인</ModalBtn2>
             </ModalBtnDiv>
@@ -279,4 +356,4 @@ function Signup(props) {
   );
 }
 
-export default Signup;
+export default Register;

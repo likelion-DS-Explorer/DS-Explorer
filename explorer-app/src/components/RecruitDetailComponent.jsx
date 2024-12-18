@@ -8,7 +8,6 @@ import "slick-carousel/slick/slick-theme.css";
 import "../styles/RecruitDetail.css";
 /*버튼*/
 import likeBtn from "../img/likeBtn.png";
-import likeBtnAfter from "../img/likeBtnAfter.png";
 import bookmarkBtn from "../img/bookmarkBtn.png";
 import bookmarkBtnAfter from "../img/bookmarkBtnAfter.png";
 /*사진*/
@@ -23,16 +22,10 @@ const imageUrls = [picOne, picTwo, picThree, picFour, picFive, picSix];
 
 function RecruitDetailComponent() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isLiked, setIsLiked] = useState(false); // 좋아요 버튼 상태 관리
   const [isBookmarked, setIsBookmarked] = useState(false); // 좋아요 버튼 상태 관리
 
   const handleClick = (index) => {
     setCurrentIndex(index);
-  };
-
-  const handleLikeClick = () => {
-    // 좋아요 상태 변경
-    setIsLiked((prevIsLiked) => !prevIsLiked);
   };
 
   const handleBookmarkClick = () => {
@@ -126,9 +119,6 @@ function RecruitDetailComponent() {
             </li>
           </ul>
           <div className="btnDiv">
-            <button type="button" className="likeBtn" onClick={handleLikeClick}>
-              <img src={isLiked ? likeBtnAfter : likeBtn} alt="Like" />
-            </button>
             <button type="button" className="bookmarkBtn" onClick={handleBookmarkClick}>
               <img src={isBookmarked ? bookmarkBtnAfter : bookmarkBtn} alt="Bookmark" />
             </button>

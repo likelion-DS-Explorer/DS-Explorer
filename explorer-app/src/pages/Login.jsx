@@ -57,11 +57,16 @@ const Submit = styled.button`
   height: 104px;
   border: none;
   border-radius: 4px;
-  color: white;
-  font-size: 17.58px;
-  font-weight: 400;
-  background-color: #5e89e2;
+  color: #F5A524;
+  font-size: 20px;
+  font-weight: bold;
+  background-color: #F5A52420;
   margin-left: 19px;
+
+  &:hover {
+    background-color: #F5A52470;
+    cursor: pointer; 
+  }
 `;
 
 const LinkDiv = styled.div``;
@@ -100,7 +105,7 @@ function Login() {
           <Submit type="submit">로그인</Submit>
         </LoginForm>
         <LinkDiv>
-          <Signup type="button" onClick={() => navigate("/signup")}>
+          <Signup type="button" onClick={() => navigate("/users/register/")}>
             회원가입
           </Signup>
           <Link type="button" onClick={() => navigate("/findid")}>
