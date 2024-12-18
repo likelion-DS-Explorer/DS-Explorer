@@ -58,8 +58,9 @@ const Button = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  color: ${palette.white};
-  background-color: ${palette.button};
+  color: ${palette.orangetext};
+  background-color: ${palette.orange};
+  border: 1px solid ${palette.orange};
   width: 282px;
   height: 48px;
   border-radius: 5px;

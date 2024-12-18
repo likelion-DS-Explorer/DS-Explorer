@@ -1,10 +1,11 @@
 const palette = {
   background: "#09091A",
-  button: "#5E89E2",
-  color3: "#6A226D",
+  orange: "#3A2A21",
+  orangetext: "#F5A524",
+  blue: "#091F4A",
+  bluetext: "#006FEE",
   white: "#fff",
   shadow: "#3989C6",
-  footer: "#583687",
 };
 
 export default palette;

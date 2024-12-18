@@ -149,6 +149,14 @@ export const Input = styled.input`
   }
 `;
 
+export const CheckboxDouble = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 80px;
+  justify-content: space-between;
+  padding: 5px 0px 10px 0px;
+`;
+
 export const CheckboxGroup = styled.div`
   display: flex;
   align-items: center;
@@ -242,10 +250,19 @@ export const DatePickerContainer = styled.div`
   margin-left: 80px;
 `;
 
+export const DateGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+`;
+
 export const DatePickerWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  width: 300px;
+  justify-content: end;
   gap: 20px;
 `;
 
@@ -292,18 +309,19 @@ export const Button = styled.button`
   width: 179px;
   height: 48px;
   margin-top: 40px;
-  background-color: ${palette.button};
-  color: ${palette.white};
+  background-color: ${palette.blue};
+  color: ${palette.bluetext};
   border: none;
   border-radius: 4px;
-  padding: 8px 16px;
-  font-size: 18px;
+  padding: 8px 16px 11px 16px;
+  font-size: 17px;
+  font-weight: 600;
   cursor: pointer;
   position: relative; /* 버튼을 프리뷰 위에 표시 */
   z-index: 2;
 
   &:hover {
-    background-color: #4a70d8;
+    background-color: #061635;
   }
 `;
 
@@ -348,19 +366,37 @@ export const Submission = styled.div`
   gap: 20px;
 `;
 
+export const CancelButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 130px;
+  height: 55px;
+  border: 2px solid ${palette.orange};
+  border-radius: 8px;
+  background-color: ${palette.orange};
+  cursor: pointer;
+  color: ${palette.orangetext};
+  font-size: 18px;
+
+  &:hover {
+  }
+`;
+
 export const SubmitButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 112px;
-  height: 48px;
-  border: 1px solid ${palette.button};
-  border-radius: 5px;
+  width: 130px;
+  height: 55px;
+  border: 2px solid ${palette.orangetext};
+  border-radius: 8px;
   background-color: transparent;
   cursor: pointer;
+  color: ${palette.orangetext};
+  font-size: 18px;
 
   &:hover {
-    background-color: ${palette.button};
   }
 `;
 
@@ -437,4 +473,67 @@ export const Limit = styled.div`
   font-weight: 300;
   line-height: 16px;
   letter-spacing: 10%;
+`;
+
+export const WeekSelector = styled.div`
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+`;
+
+export const WeekButton = styled.button`
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid #c5c5c9;
+  background-color: ${(props) => (props.selected ? "#4b4b4b" : "transparent")};
+  color: ${(props) => (props.selected ? "#ffffff" : "#c5c5c9")};
+  cursor: pointer;
+
+  &:hover {
+    background-color: #6d6d79;
+    color: #ffffff;
+  }
+`;
+
+export const TimeRange = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  input[type="range"] {
+    width: 300px;
+    margin: 5px;
+  }
+  div {
+    margin-top: 10px;
+    color: #c5c5c9;
+  }
+`;
+
+export const RadioGroup = styled.div`
+  display: flex;
+  gap: 20px;
+  margin-top: 10px;
+`;
+
+export const RadioLabel = styled.label`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #c5c5c9;
+  cursor: pointer;
+
+  input {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 1px solid #c5c5c9;
+    border-radius: 50%;
+    background-color: transparent;
+
+    &:checked {
+      background-color: #ffffff;
+    }
+  }
 `;

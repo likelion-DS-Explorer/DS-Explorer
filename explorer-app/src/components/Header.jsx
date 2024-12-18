@@ -127,7 +127,7 @@ function Header({ type }) {
         <Home>
           <Img src={mainLogo} alt="동아리탐험대" />
           <Nav>
-            <Navbar onClick={() => handleNavigation("/notice")}>모집 공고</Navbar>
+            <Navbar onClick={() => handleNavigation("/recruit")}>모집 공고</Navbar>
             <Navbar onClick={() => handleNavigation("/session")}>활동 소식</Navbar>
             <Navbar onClick={() => handleNavigation("/inquiry")}>문의</Navbar>
             <Navbar onClick={() => handleNavigation("/mypage")}>마이페이지</Navbar>
