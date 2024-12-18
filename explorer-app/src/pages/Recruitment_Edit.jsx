@@ -8,15 +8,17 @@ import expantion from "../img/expantion.png";
 import * as I from "../styles/InputStyle";
 import "react-datepicker/dist/react-datepicker.css";
 
-function NewsReport() {
+function Recruitment_Edit() {
   const [isGuideExpanded, setIsGuideExpanded] = useState(false);
+  const [isInputExpanded, setIsInputExpanded] = useState(false);
   const [images, setImages] = useState([]);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [participation, setParticipation] = useState(false); // 참여 가능 여부
-  const [completion, setCompletion] = useState(false); // 완료 활동 여부
-  const newsType = "Last_news"; // 고정된 값 예시
-  const clubCode = "lion"; // 고정된 값 예시
+
+  // 날짜 관련 상태
+  const [startDate1, setStartDate1] = useState(null);
+  const [startDate2, setStartDate2] = useState(null);
+  const [startDate3, setStartDate3] = useState(null);
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -47,35 +49,49 @@ function NewsReport() {
     }
   };
 
-  const handleSubmit = async () => {
-    if (!title || !content || images.length === 0) {
-      alert("제목, 내용, 이미지를 모두 입력해주세요.");
+  // API 연동 - 모집공고 수정
+  const handleUpdate = async (postId) => {
+    if (!title || !content || !startDate1 || !startDate2) {
+      alert("필수 정보를 모두 입력해주세요.");
       return;
     }
 
     const formData = new FormData();
-    formData.append("news_type", newsType);
-    formData.append("club_code", clubCode);
+    formData.append("category", "updatedCategory");
+    formData.append("style", "updatedStyle");
+    formData.append("frequency", "updatedFrequency");
+    formData.append("days", "updatedDays");
+    formData.append("start_time", "09:00:00");
+    formData.append("end_time", "18:00:00");
+    formData.append("location", "updatedLocation");
+    formData.append("fee_type", "updatedFeeType");
+    formData.append("fee", 100);
+    formData.append("apply_method", "updatedApplyMethod");
+    formData.append("apply_process", "updatedApplyProcess");
+    formData.append("start_doc", startDate1.toISOString().split("T")[0]);
+    formData.append("end_doc", startDate2.toISOString().split("T")[0]);
+    formData.append("start_interview", startDate1.toISOString().split("T")[0]);
+    formData.append("end_interview", startDate2.toISOString().split("T")[0]);
+    formData.append("recruit_result", startDate3 ? startDate3.toISOString().split("T")[0] : "");
     formData.append("title", title);
     formData.append("content", content);
-    formData.append("participation", participation);
-    formData.append("completion", completion);
+    formData.append("is_temp", false);
 
     images.forEach((image, index) => {
       formData.append(`image_${index}`, image);
     });
 
     try {
-      const response = await axios.post("http://localhost:8000/news/", formData, {
+      const response = await axios.patch(`http://localhost:3000/recruit/${postId}/`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log("뉴스 등록 성공:", response.data);
-      alert("뉴스 등록에 성공했습니다!");
+      console.log("모집공고 수정 성공:", response.data);
+      alert("모집공고가 성공적으로 수정되었습니다.");
     } catch (error) {
-      console.error("뉴스 등록 실패:", error);
-      alert("뉴스 등록에 실패했습니다. 다시 시도해주세요.");
+      console.error("수정 실패:", error);
+      alert("수정에 실패했습니다. 다시 시도해주세요.");
     }
   };
 
@@ -83,15 +99,15 @@ function NewsReport() {
     <>
       <Header type="default" />
       <I.Main>
-        {/* 활동기록 작성 가이드 */}
+        {/* 모집공고 작성 가이드 */}
         <I.Box>
           <I.BoxHeader>
             <I.Minibox>
               <I.Icon>
                 <I.Img src={paper} alt="아이콘" style={{ margin: "0px 0px 4px 4px" }} />
               </I.Icon>
-              <I.Text style={{ marginLeft: "20px", marginRight: "10px" }}>활동기록 작성 가이드</I.Text>
-              <I.Text2 style={{ fontSize: "13px" }}>활동기록 작성 시 참고해주세요.</I.Text2>
+              <I.Text style={{ marginLeft: "20px", marginRight: "10px" }}>모집공고 작성 가이드</I.Text>
+              <I.Text2 style={{ fontSize: "13px" }}>원활한 모집공고 발행을 위해 아래 내용을 확인해 주세요.</I.Text2>
             </I.Minibox>
             <I.Img
               src={expantion}
@@ -102,12 +118,12 @@ function NewsReport() {
             />
           </I.BoxHeader>
           <I.ExpandableContent isVisible={isGuideExpanded}>
-            <I.Text2>· 공개 범위: 활동기록은 모든 사람에게 공개되며, 누구나 열람할 수 있습니다. 작성 시 이 점을 고려해 주세요.</I.Text2>
+            <I.Text2>· 공개 범위: 모집 공고는 DS Explorer 웹에 회원가입한 덕성여대 학생들에게만 공개됩니다.</I.Text2>
           </I.ExpandableContent>
         </I.Box>
 
-        {/* 일반 정보 선택 */}
-        <I.Box style={{ justifyContent: "column" }}>
+        {/* 필수 정보 입력 */}
+        <I.Box>
           <I.BoxHeader>
             <I.Minibox>
               <I.Icon>
@@ -117,23 +133,15 @@ function NewsReport() {
               <I.Text2 style={{ fontSize: "13px" }}>모집 공고에 필요한 정보이니 최대한 꼼꼼하게 입력해주세요.</I.Text2>
             </I.Minibox>
           </I.BoxHeader>
-          <I.Group style={{ margin: "0px 0px 30px 0px" }}>
-            <I.CheckboxGroup>
-              <I.Checkbox>
-                <I.Input type="checkbox" id="participation" checked={participation} onChange={() => setParticipation(!participation)} />
-                <label htmlFor="participation">참여 가능</label>
-              </I.Checkbox>
-              <I.Checkbox>
-                <I.Input type="checkbox" id="completion" checked={completion} onChange={() => setCompletion(!completion)} />
-                <label htmlFor="completion">완료 활동</label>
-              </I.Checkbox>
-            </I.CheckboxGroup>
-          </I.Group>
         </I.Box>
 
         {/* 드래그 앤 드롭 및 버튼 */}
         <I.UploadContainer onDragOver={handleDragOver} onDrop={handleDrop}>
-          <I.PlaceholderText isHidden={images.length > 0}>드래그 앤 드롭이나 추가하기 버튼으로 사진을 업로드 해주세요.</I.PlaceholderText>
+          <I.PlaceholderText isHidden={images.length > 0}>
+            드래그 앤 드롭이나 추가하기 버튼으로
+            <br />
+            사진을 업로드 해주세요.
+          </I.PlaceholderText>
           <input type="file" id="fileInput" style={{ display: "none" }} multiple accept="image/*" onChange={handleFileInputChange} />
           <I.ImagePreview>
             {images.map((src, index) => (
@@ -154,12 +162,11 @@ function NewsReport() {
       </I.Main>
 
       <I.Submission style={{ margin: "70px" }}>
-        <I.CancelButton>삭제</I.CancelButton>
-        <I.SubmitButton onClick={handleSubmit}>등록</I.SubmitButton>
+        <I.SubmitButton onClick={() => handleUpdate(123)}>수정</I.SubmitButton>
       </I.Submission>
       <Footer />
     </>
   );
 }
 
-export default NewsReport;
+export default Recruitment_Edit;

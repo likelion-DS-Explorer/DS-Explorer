@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import paper from "../img/pencil_writing.png";
@@ -11,11 +12,22 @@ function Recruitment() {
   const [isGuideExpanded, setIsGuideExpanded] = useState(false);
   const [isInputExpanded, setIsInputExpanded] = useState(false);
   const [images, setImages] = useState([]);
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
 
   // 날짜 관련 상태
   const [startDate1, setStartDate1] = useState(null);
   const [startDate2, setStartDate2] = useState(null);
   const [startDate3, setStartDate3] = useState(null);
+
+  const handleTestApi = async () => {
+    try {
+      const response = await axios.get("http://localhost:3000/recruit");
+      console.log("API 테스트 성공:", response.data);
+    } catch (error) {
+      console.error("API 테스트 실패:", error);
+    }
+  };
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -38,6 +50,58 @@ function Recruitment() {
   const handleFileInputChange = (e) => {
     const files = Array.from(e.target.files);
     handleFiles(files);
+  };
+
+  // 제목 입력 핸들러
+  const handleTitleChange = (e) => {
+    if (e.target.value.length <= 80) {
+      setTitle(e.target.value);
+    }
+  };
+
+  // API 연동 - 모집공고 등록
+  const handleSubmit = async () => {
+    if (!title || !content || !startDate1 || !startDate2) {
+      alert("필수 정보를 모두 입력해주세요.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("category", "defaultCategory"); // 예시 값, 실제 입력 데이터를 연결해야 함
+    formData.append("style", "defaultStyle"); // 예시 값
+    formData.append("frequency", "defaultFrequency"); // 예시 값
+    formData.append("days", "defaultDays"); // 예시 값
+    formData.append("start_time", "09:00:00"); // 예시 값
+    formData.append("end_time", "18:00:00"); // 예시 값
+    formData.append("location", "defaultLocation"); // 예시 값
+    formData.append("fee_type", "defaultFeeType"); // 예시 값
+    formData.append("fee", 0); // 예시 값
+    formData.append("apply_method", "defaultApplyMethod"); // 예시 값
+    formData.append("apply_process", "defaultApplyProcess"); // 예시 값
+    formData.append("start_doc", startDate1.toISOString().split("T")[0]);
+    formData.append("end_doc", startDate2.toISOString().split("T")[0]);
+    formData.append("start_interview", startDate1.toISOString().split("T")[0]); // 예시 값
+    formData.append("end_interview", startDate2.toISOString().split("T")[0]); // 예시 값
+    formData.append("recruit_result", startDate3 ? startDate3.toISOString().split("T")[0] : "");
+    formData.append("title", title);
+    formData.append("content", content);
+
+    images.forEach((image, index) => {
+      formData.append(`image_${index}`, image); // 이미지 파일 추가
+    });
+
+    try {
+      const response = await axios.post("http://localhost:3000/recruit", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      alert("모집공고가 성공적으로 등록되었습니다.");
+      console.log(response.data);
+    } catch (error) {
+      console.error("등록 실패:", error);
+      alert("등록에 실패했습니다. 다시 시도해주세요.");
+    }
   };
 
   return (
@@ -69,13 +133,13 @@ function Recruitment() {
             />
           </I.BoxHeader>
           <I.ExpandableContent isVisible={isGuideExpanded}>
-            <I.Text2>- 공개 범위: 모집 공고는 DS Explorer 웹에 회원가입한 덕성여대 학생들에게만 공개됩니다.</I.Text2>
+            <I.Text2>· 공개 범위: 모집 공고는 DS Explorer 웹에 회원가입한 덕성여대 학생들에게만 공개됩니다.</I.Text2>
             <I.Text2>
-              ● 등록 및 수정: 모집 공고는 모집 마감 전까지 언제든 수정 가능합니다. 수정은 게시물 수정 페이지에서 진행해 주세요. 모집 공고가 완성되면 등록 버튼을
+              · 등록 및 수정: 모집 공고는 모집 마감 전까지 언제든 수정 가능합니다. 수정은 게시물 수정 페이지에서 진행해 주세요. 모집 공고가 완성되면 등록 버튼을
               눌러 게시해 주세요.
             </I.Text2>
             <I.Text2>
-              ● 게시물 작성 제한: 모집공고 페이지에서는 필수 정보 입력과 모집공고 사진 업로드만 가능합니다. 동아리 관련 글 작성은 상세 동아리 탐험 등록
+              · 게시물 작성 제한: 모집공고 페이지에서는 필수 정보 입력과 모집공고 사진 업로드만 가능합니다. 동아리 관련 글 작성은 상세 동아리 탐험 등록
               페이지에서 진행해 주세요.
             </I.Text2>
           </I.ExpandableContent>
@@ -104,7 +168,7 @@ function Recruitment() {
               <I.Sequence>
                 <I.Number style={{ marginBottom: "160px" }}>01</I.Number>
                 <I.Number style={{ marginBottom: "265px" }}>02</I.Number>
-                <I.Number>03</I.Number>
+                {/* <I.Number>03</I.Number> */}
               </I.Sequence>
               <I.Article>
                 <I.Inputbox>
@@ -115,7 +179,7 @@ function Recruitment() {
                   </I.Group>
                   <I.Group>
                     <I.Text3>활동스타일</I.Text3>
-                    <I.CheckboxGroup>
+                    <I.CheckboxGroup style={{ justifyContent: "space-around" }}>
                       <I.Checkbox>
                         <I.Input type="checkbox" id="project" />
                         <label htmlFor="project">프로젝트 및 대외 활동</label>
@@ -155,41 +219,63 @@ function Recruitment() {
                   <I.Group>
                     <I.Text3>모집기간</I.Text3>
                     <I.DatePickerContainer>
-                      <I.DatePickerWrapper>
-                        <I.Text2 style={{ color: "#c5c5c9" }}>서류</I.Text2>
-                        <I.CustomDatePicker
-                          selected={startDate1}
-                          onChange={(date) => setStartDate1(date)}
-                          dateFormat="yyyy/MM/dd"
-                          placeholderText="YYYY/MM/DD"
-                        />
-                      </I.DatePickerWrapper>
-                      <I.DatePickerWrapper>
-                        <I.Text2 style={{ color: "#c5c5c9" }}>면접</I.Text2>
-                        <I.CustomDatePicker
-                          selected={startDate2}
-                          onChange={(date) => setStartDate2(date)}
-                          dateFormat="yyyy/MM/dd"
-                          placeholderText="YYYY/MM/DD"
-                        />
-                      </I.DatePickerWrapper>
+                      <I.DateGroup>
+                        <I.DatePickerWrapper>
+                          <I.Text2 style={{ color: "#c5c5c9" }}>서류 시작</I.Text2>
+                          <I.CustomDatePicker
+                            selected={startDate1}
+                            onChange={(date) => setStartDate1(date)}
+                            dateFormat="yyyy/MM/dd"
+                            placeholderText="YYYY/MM/DD"
+                          />
+                        </I.DatePickerWrapper>
+                        <I.DatePickerWrapper>
+                          <I.Text2 style={{ color: "#c5c5c9" }}>마감</I.Text2>
+                          <I.CustomDatePicker
+                            selected={startDate2}
+                            onChange={(date) => setStartDate2(date)}
+                            dateFormat="yyyy/MM/dd"
+                            placeholderText="YYYY/MM/DD"
+                          />
+                        </I.DatePickerWrapper>
+                      </I.DateGroup>
+                      <I.DateGroup>
+                        <I.DatePickerWrapper>
+                          <I.Text2 style={{ color: "#c5c5c9" }}>면접 시작</I.Text2>
+                          <I.CustomDatePicker
+                            selected={startDate1}
+                            onChange={(date) => setStartDate1(date)}
+                            dateFormat="yyyy/MM/dd"
+                            placeholderText="YYYY/MM/DD"
+                          />
+                        </I.DatePickerWrapper>
+                        <I.DatePickerWrapper>
+                          <I.Text2 style={{ color: "#c5c5c9" }}>마감</I.Text2>
+                          <I.CustomDatePicker
+                            selected={startDate2}
+                            onChange={(date) => setStartDate2(date)}
+                            dateFormat="yyyy/MM/dd"
+                            placeholderText="YYYY/MM/DD"
+                          />
+                        </I.DatePickerWrapper>
+                      </I.DateGroup>
                     </I.DatePickerContainer>
                   </I.Group>
                   <I.Group>
                     <I.Text3>결과발표</I.Text3>
-                    <I.DatePickerContainer>
-                      <I.Text2 style={{ color: "#c5c5c9" }}>결과</I.Text2>
+                    <I.DatePickerContainer style={{ marginLeft: "88px" }}>
+                      <I.Text2 style={{ color: "#c5c5c9" }}>결과 발표</I.Text2>
                       <I.CustomDatePicker selected={startDate3} onChange={(date) => setStartDate3(date)} dateFormat="yyyy/MM/dd" placeholderText="YYYY/MM/DD" />
                     </I.DatePickerContainer>
                   </I.Group>
                 </I.Inputbox>
-                <I.Inputbox style={{ marginTop: "50px" }}>
+                {/* <I.Inputbox style={{ marginTop: "50px" }}>
                   <I.Text style={{ fontSize: "20px" }}>문의사항</I.Text>
                   <I.Group>
                     <I.Text3>연락처/링크</I.Text3>
                     <I.Input type="text" placeholder="입력해주세요" style={{ width: "192px" }} />
                   </I.Group>
-                </I.Inputbox>
+                </I.Inputbox> */}
               </I.Article>
             </I.Contents>
           </I.ExpandableContent>
@@ -202,7 +288,6 @@ function Recruitment() {
             <br />
             사진을 업로드 해주세요.
           </I.PlaceholderText>
-          <I.Button onClick={() => document.getElementById("fileInput").click()}>사진 추가하기</I.Button>
           <input type="file" id="fileInput" style={{ display: "none" }} multiple accept="image/*" onChange={handleFileInputChange} />
           <I.ImagePreview>
             {images.map((src, index) => (
@@ -210,11 +295,24 @@ function Recruitment() {
             ))}
           </I.ImagePreview>
         </I.UploadContainer>
+        <I.Button onClick={() => document.getElementById("fileInput").click()}>사진 추가하기</I.Button>
+
+        {/* 제목 입력 */}
+        <I.WriteBox>
+          <I.Title>
+            <I.Write type="text" placeholder="제목을 입력해주세요." value={title} onChange={handleTitleChange} />
+            <I.Limit>{title.length}/80</I.Limit>
+          </I.Title>
+          <I.Textarea placeholder="내용을 입력해주세요." value={content} onChange={(e) => setContent(e.target.value)} />
+        </I.WriteBox>
       </I.Main>
-      <I.Submission>
-        <I.SubmitButton>등록</I.SubmitButton>
-        <I.SubmitButton>삭제</I.SubmitButton>
+
+      <I.Submission style={{ margin: "70px" }}>
+        <I.CancelButton>삭제</I.CancelButton>
+        <I.SubmitButton onClick={handleSubmit}>등록</I.SubmitButton>
       </I.Submission>
+      {/* API 테스트 버튼 */}
+      <button onClick={handleTestApi}>API 연동 테스트</button>
       <Footer />
     </>
   );

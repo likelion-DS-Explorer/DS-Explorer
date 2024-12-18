@@ -8,14 +8,16 @@ import expantion from "../img/expantion.png";
 import * as I from "../styles/InputStyle";
 import "react-datepicker/dist/react-datepicker.css";
 
-function NewsReport() {
+function NewsReport_Edit({ match }) {
+  const newsId = match.params.news_id; // URL에서 뉴스 ID 가져오기
+
   const [isGuideExpanded, setIsGuideExpanded] = useState(false);
   const [images, setImages] = useState([]);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [participation, setParticipation] = useState(false); // 참여 가능 여부
-  const [completion, setCompletion] = useState(false); // 완료 활동 여부
-  const newsType = "Last_news"; // 고정된 값 예시
+  const [participation, setParticipation] = useState(false);
+  const [completion, setCompletion] = useState(false);
+  const newsType = "News_to_come"; // 수정된 뉴스 타입
   const clubCode = "lion"; // 고정된 값 예시
 
   const handleDragOver = (e) => {
@@ -47,9 +49,9 @@ function NewsReport() {
     }
   };
 
-  const handleSubmit = async () => {
-    if (!title || !content || images.length === 0) {
-      alert("제목, 내용, 이미지를 모두 입력해주세요.");
+  const handleUpdate = async () => {
+    if (!title || !content) {
+      alert("제목과 내용을 입력해주세요.");
       return;
     }
 
@@ -66,16 +68,27 @@ function NewsReport() {
     });
 
     try {
-      const response = await axios.post("http://localhost:8000/news/", formData, {
+      const response = await axios.put(`http://localhost:8000/news/${newsId}/`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log("뉴스 등록 성공:", response.data);
-      alert("뉴스 등록에 성공했습니다!");
+      console.log("활동 기록 수정 성공:", response.data);
+      alert("활동 기록 수정에 성공했습니다!");
     } catch (error) {
-      console.error("뉴스 등록 실패:", error);
-      alert("뉴스 등록에 실패했습니다. 다시 시도해주세요.");
+      console.error("활동 기록 수정 실패:", error);
+      alert("활동 기록 수정에 실패했습니다. 다시 시도해주세요.");
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      const response = await axios.delete(`http://localhost:8000/news/${newsId}/`);
+      console.log("활동 기록 삭제 성공:", response.data);
+      alert("활동 기록 삭제에 성공했습니다!");
+    } catch (error) {
+      console.error("활동 기록 삭제 실패:", error);
+      alert("활동 기록 삭제에 실패했습니다. 다시 시도해주세요.");
     }
   };
 
@@ -90,8 +103,8 @@ function NewsReport() {
               <I.Icon>
                 <I.Img src={paper} alt="아이콘" style={{ margin: "0px 0px 4px 4px" }} />
               </I.Icon>
-              <I.Text style={{ marginLeft: "20px", marginRight: "10px" }}>활동기록 작성 가이드</I.Text>
-              <I.Text2 style={{ fontSize: "13px" }}>활동기록 작성 시 참고해주세요.</I.Text2>
+              <I.Text style={{ marginLeft: "20px", marginRight: "10px" }}>활동기록 수정/삭제 가이드</I.Text>
+              <I.Text2 style={{ fontSize: "13px" }}>활동기록 수정/삭제 시 참고해주세요.</I.Text2>
             </I.Minibox>
             <I.Img
               src={expantion}
@@ -102,7 +115,7 @@ function NewsReport() {
             />
           </I.BoxHeader>
           <I.ExpandableContent isVisible={isGuideExpanded}>
-            <I.Text2>· 공개 범위: 활동기록은 모든 사람에게 공개되며, 누구나 열람할 수 있습니다. 작성 시 이 점을 고려해 주세요.</I.Text2>
+            <I.Text2>· 공개 범위: 활동기록은 모든 사람에게 공개되며, 누구나 열람할 수 있습니다. 수정 시 이 점을 고려해 주세요.</I.Text2>
           </I.ExpandableContent>
         </I.Box>
 
@@ -154,12 +167,12 @@ function NewsReport() {
       </I.Main>
 
       <I.Submission style={{ margin: "70px" }}>
-        <I.CancelButton>삭제</I.CancelButton>
-        <I.SubmitButton onClick={handleSubmit}>등록</I.SubmitButton>
+        <I.CancelButton onClick={handleDelete}>삭제</I.CancelButton>
+        <I.SubmitButton onClick={handleUpdate}>수정</I.SubmitButton>
       </I.Submission>
       <Footer />
     </>
   );
 }
 
-export default NewsReport;
+export default NewsReport_Edit;
