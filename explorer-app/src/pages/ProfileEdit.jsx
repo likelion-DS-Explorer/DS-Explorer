@@ -2,11 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import Header from "../components/Header";
 
+// 폰트 스타일 적용
 const Content = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
   margin-top: 2vw;
+  font-family: 'DMSansBlack', sans-serif; /* 폰트 적용 */
 `;
 
 const Title = styled.h1`
@@ -40,15 +42,15 @@ const InputBlock = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  flex: 1 1 calc(33.333% - 24px); /* 3개씩 배치되도록 너비 설정 (20px은 간격을 고려한 값) */
-  min-width: 200px; /* 최소 너비를 설정하여 너무 좁아지지 않게 */
-  margin-bottom: 32px; /* 아래쪽에 간격 추가 */
+  flex: 1 1 calc(33.333% - 24px);
+  min-width: 200px;
+  margin-bottom: 32px;
 `;
 
 const Label = styled.label`
   font-size: 18px;
   font-weight: 500;
-  color: #ffffff80;
+  color: #ffffff;
   margin-bottom: 13px;
 `;
 
@@ -56,7 +58,7 @@ const Input = styled.input`
   width: 266px;
   height: 48px;
   border-radius: 6px;
-  border: 1px solid #4b67d850;
+  border: 1px solid #006FEE;
   background-color: #ffffff00;
   color: #ffffff;
   font-size: 18px;
@@ -81,10 +83,17 @@ const Submit = styled.button`
   width: 179px;
   height: 48px;
   border: none;
-  border-radius: 4px;
-  color: white;
-  font-size: 17.58px;
-  background-color: #5e89e2;
+  border-radius: 8px;
+  color: #F5A524;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #F5A52420;
+  font-family: 'DMSansBlack', sans-serif; 
+
+  &:hover {
+    background-color: #F5A52470;
+    cursor: pointer; 
+  }
 `;
 
 function ProfileEdit() {
