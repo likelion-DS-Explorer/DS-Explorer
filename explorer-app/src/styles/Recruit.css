@@ -19,7 +19,7 @@
 .notice-grid {
   display: grid;
   grid-template-columns: repeat(2, 335px);
-  gap: 40px;
+  gap: 70px 0;
   margin-bottom: 20px;
 }
 
@@ -64,13 +64,13 @@
   font-size: 16px;
   font-weight: 600;
   margin-top: 5px;
+
   text-align: left;
 }
 
 /* Pagination 스타일 */
 .pagination {
-  margin: 50px 0;
-  display: flex;
+  margin: 50px flex;
   justify-content: center;
   gap: 2px; /* 번호 간 간격 최소화 */
 }

@@ -1,81 +1,75 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import "../styles/News.css";
-import Header from "../components/Header";
 import SessionItem from "../components/SessionItem";
+import exampleImage1 from "../img/tempData/news1.png";
+import exampleImage2 from "../img/tempData/news2.png";
+import exampleImage3 from "../img/tempData/news3.png";
+import exampleImage4 from "../img/tempData/news4.png";
+import exampleImage5 from "../img/tempData/news5.png";
 
 function News() {
-  const itemsPerPage = 5; // 한 페이지에 5개씩 표시
-  const pageGroupSize = 5; // 페이지 그룹 크기
+  const sessionData = [
+    {
+      id: 1,
+      image: exampleImage1,
+      title: "멋쟁이사자처럼, '사계(개)절' 프로젝트 데모데이 및 수료식 성료!",
+      category: "IT | 멋쟁이사자처럼",
+      content:
+        "2024년 2학기, 멋쟁이사자처럼 동아리의 '사계(개)절' 프로젝트가 성공적으로 마무리되었습니다.",
+      status: "완료활동 2024.12.19",
+      statusColor: "rgba(245, 165, 36, 0.6)",
+    },
+    {
+      id: 2,
+      image: exampleImage2,
+      title: "2024 F.O.R.K 2nd Homecoming  “For.kids” 🎸🎤🔥",
+      category: "공연·음악 | F.O.R.K",
+      content:
+        "덕성여대 중앙락밴드 F.O.R.K의 졸업생과 메인 기수가 함께하는 두 번째 홈커밍에 여러분을 초대합니다!",
+      status: "참여가능 2024.11.25",
+      statusColor: "rgba(0, 111, 238, 0.6)",
+    },
+    {
+      id: 3,
+      image: exampleImage3,
+      title:
+        "🎬 월제 16회 소울라이 정기공연 X 영화제 🎭 ~ DSFF: Duksung Soully Film Festival ~!",
+      category: "공연·음악 | soully",
+      content:
+        "📢 2024년, 영화 같은 특별한 춤의 세계로 초대합니다! 왁킹, 락킹, 하우스 등 다양한 무대를 만나보세요.",
+      status: "참여가능 2024.11.25",
+      statusColor: "rgba(0, 111, 238, 0.6)",
+    },
+    {
+      id: 4,
+      image: exampleImage4,
+      title: "교내 전시회 ‘겨울 빛’ 개최",
+      category: "예술·창작 | 한빛",
+      content:
+        "덕성여자대학교 사진동아리 ‘한빛’이 도서관 전시실에서 ‘청춘의 한 순간’을 주제로 전시회를 엽니다.",
+      status: "참여가능 2024.11.20",
+      statusColor: "rgba(0, 111, 238, 0.6)",
+    },
+    {
+      id: 5,
+      image: exampleImage5,
+      title: "필름소피 팟캐스트 <ep.22 최악의 영화>",
+      category: "예술·창작 | 필름소피",
+      content:
+        "덕성여자대학교 영상영화제작동아리 필름소피의 팟캐스트 스물두 번째 에피소드가 업로드되었습니다.",
+      status: "완료활동 2024.11.9",
+      statusColor: "rgba(245, 165, 36, 0.6)",
+    },
+  ];
 
-  const [newsData, setNewsData] = useState([]); // API에서 가져올 뉴스 데이터
-  const [currentPage, setCurrentPage] = useState(0); // 현재 페이지
-  const [pageRangeStart, setPageRangeStart] = useState(0); // 페이지 그룹 시작점
-  const [loading, setLoading] = useState(true); // 로딩 상태
-  const [error, setError] = useState(null); // 에러 상태
-
-  // 백엔드 API 데이터 가져오기
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get("http://127.0.0.1:8000/news/");
-        console.log("API 응답:", response.data);
-        setNewsData(response.data.results || []); // results 배열을 상태에 저장
-      } catch (err) {
-        console.error("Error fetching news:", err);
-        setError("데이터를 불러오는 중 오류가 발생했습니다.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  // 페이지네이션 데이터
-  const totalPages = Math.ceil(Math.max(newsData.length, 1) / itemsPerPage); // 최소 1페이지 표시
-  const currentItems = newsData.slice(
+  const itemsPerPage = 5;
+  const [currentPage, setCurrentPage] = useState(0);
+  const currentItems = sessionData.slice(
     currentPage * itemsPerPage,
     (currentPage + 1) * itemsPerPage
   );
 
-  // 페이지네이션 핸들러
-  const handlePageClick = (pageIndex) => {
-    setCurrentPage(pageIndex);
-  };
-
-  const handlePrevRange = () => {
-    if (pageRangeStart > 0) {
-      setPageRangeStart(pageRangeStart - pageGroupSize);
-      setCurrentPage(pageRangeStart - pageGroupSize);
-    }
-  };
-
-  const handleNextRange = () => {
-    if (pageRangeStart + pageGroupSize < totalPages) {
-      setPageRangeStart(pageRangeStart + pageGroupSize);
-      setCurrentPage(pageRangeStart + pageGroupSize);
-    }
-  };
-
-  const renderPageNumbers = () => {
-    const pages = [];
-    const rangeEnd = Math.min(pageRangeStart + pageGroupSize, totalPages);
-
-    for (let i = pageRangeStart; i < rangeEnd; i++) {
-      pages.push(
-        <button
-          key={i}
-          onClick={() => handlePageClick(i)}
-          className={`page-number ${currentPage === i ? "active" : ""}`}
-        >
-          {i + 1}
-        </button>
-      );
-    }
-    return pages;
-  };
+  const handlePageClick = (pageIndex) => setCurrentPage(pageIndex);
 
   return (
     <>
@@ -83,47 +77,36 @@ function News() {
         <div className="session-header">
           <h1 className="session-title">동아리에서 이뤄진 활동을 여기서 확인하세요!</h1>
           <p className="session-description">
-            다가올 소식과 지난 소식에서 동아리가 진행했던 다양한 활동과 앞으로의 행사 일정을 한눈에 확인하며,
-            함께할 멋진 경험들을 미리 만나보세요.
+            다가올 소식과 지난 소식에서 동아리가 진행했던 다양한 활동과 앞으로의
+            행사 일정을 한눈에 확인하며, 함께할 멋진 경험들을 미리 만나보세요.
           </p>
         </div>
         <div className="session-list">
-          {loading ? (
-            <div>로딩 중...</div>
-          ) : error ? (
-            <div>{error}</div>
-          ) : newsData.length > 0 ? (
-            currentItems.map((news) => (
-              <SessionItem
-                key={news.id}
-                image={
-                  news.images && news.images.length > 0
-                    ? `http://127.0.0.1:8000${news.images[0]}`
-                    : "https://via.placeholder.com/150"
-                }
-                title={news.title}
-                category={news.news_type}
-                content={news.content}
-                status={
-                  news.news_type === "News_to_come" ? "다가올 소식" : "지난 소식"
-                }
-              />
-            ))
-          ) : (
-            <div>소식이 없습니다.</div>
-          )}
+          {currentItems.map((news) => (
+            <SessionItem
+              key={news.id}
+              image={news.image}
+              title={news.title}
+              category={news.category}
+              content={news.content}
+              status={news.status}
+              statusColor={news.statusColor}
+            />
+          ))}
         </div>
         <div className="pagination">
-          <button onClick={handlePrevRange} disabled={pageRangeStart === 0}>
-            &lt;
-          </button>
-          {renderPageNumbers()}
-          <button
-            onClick={handleNextRange}
-            disabled={pageRangeStart + pageGroupSize >= totalPages}
-          >
-            &gt;
-          </button>
+          {Array.from(
+            { length: Math.ceil(sessionData.length / itemsPerPage) },
+            (_, index) => (
+              <button
+                key={index}
+                onClick={() => handlePageClick(index)}
+                className={`page-number ${index === currentPage ? "active" : ""}`}
+              >
+                {index + 1}
+              </button>
+            )
+          )}
         </div>
       </div>
     </>

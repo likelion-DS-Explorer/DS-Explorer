@@ -1,8 +1,15 @@
 import React from 'react';
+import { useNavigate } from "react-router-dom";
 
-const NoticeItem = ({ image, clubName, deadline, title }) => {
+const NoticeItem = ({ id, image, clubName, deadline, title }) => {
+    const navigate = useNavigate();
+  
+    const handleClick = () => {
+      navigate(`/recruit/${id}`); // Navigate to the NewsDetail page with the news ID
+    };
+
   return (
-    <div className="notice-item">
+    <div className="notice-item" onClick={handleClick}>
       <img src={image} alt={title} className="notice-image" />
       <div className="notice-info">
         <span className="notice-club-name">{clubName}</span>

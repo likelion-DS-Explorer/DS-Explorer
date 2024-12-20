@@ -11,7 +11,7 @@ import likeBtn from "../img/likeBtn.png";
 import bookmarkBtn from "../img/bookmarkBtn.png";
 import bookmarkBtnAfter from "../img/bookmarkBtnAfter.png";
 /*사진*/
-import picOne from "../img/ex_img/one.png";
+import picOne from "../img/tempData/recruit1.png";
 import picTwo from "../img/ex_img/two.png";
 import picThree from "../img/ex_img/three.png";
 import picFour from "../img/ex_img/four.png";
@@ -34,7 +34,7 @@ function RecruitDetailComponent() {
   };
 
   const handleApplyClick = () => {
-    window.location.href = "https://example.com/apply";
+    window.location.href = "/users/profile/:student_id/apply/";
   };
 
   // 미리보기 이미지 배열의 앞 5개만 가져오는 함수

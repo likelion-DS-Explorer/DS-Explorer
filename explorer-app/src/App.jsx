@@ -49,7 +49,7 @@ function App() {
         <Route exact path="/users/profile/:student_id/apply/" element={<Apply />} />
         <Route exact path="/users/profile/:student_id/editpost/" element={<EditPost />} />
         <Route exact path="/clubs" element={<Clubs />} />
-        <Route exact path="clubs/:club_id" element={<ClubDetail />} />
+        <Route exact path="clubs/detail" element={<ClubDetail />} />
         <Route exact path="/clubsinfo" element={<ClubsInfo />} /> /* 동아리 소개 작성 */
         <Route exact path="/recruit/" element={<Recruit />} />
         <Route exact path="/recruit/recruitment" element={<Recruitment />} /> /* 모집공고작성 */

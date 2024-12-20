@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import palette from "../lib/colorPalette";
@@ -60,7 +61,7 @@ const Button = styled.div`
   justify-content: center;
   color: ${palette.orangetext};
   background-color: ${palette.orange};
-  border: 1px solid ${palette.orange};
+  border: 2px solid ${palette.orangetext};
   width: 282px;
   height: 48px;
   border-radius: 5px;
@@ -152,6 +153,8 @@ const Section3 = styled.div`
 `;
 
 function Main() {
+  const navigate = useNavigate(); // Initialize useNavigate
+
   const clubs = [
     { image: performanceMusic, category: "공연·음악", subcategory: "솔바람 | SoulLy | 운향 | 운현극예술 연구회 |\n 카들레아 | F.O.R.K | P.I.C.E. | M.O.D.s" },
     { image: sportsLeisure, category: "스포츠·레저", subcategory: "운산 | FC Flora | 하이클리어 |\n BEAUTIFLY | Win Hands Down" },
@@ -170,7 +173,7 @@ function Main() {
         <Left>
           <Text style={{ fontSize: "40px", fontWeight: "700", marginBottom: "70px" }}>덕성의 동아리, 쉽고 빠르게 탐험하다</Text>
           <Text style={{ fontSize: "70px", fontWeight: "700", marginBottom: "90px" }}>DS Explorer</Text>
-          <Button>
+          <Button onClick={() => navigate("/clubs")}>
             <Img src={rocket} alt="로켓이미지" style={{ width: "33px", height: "24px" }} />
             탐험하기
           </Button>
