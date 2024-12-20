@@ -60,7 +60,7 @@ const Button = styled.div`
   justify-content: center;
   color: ${palette.orangetext};
   background-color: ${palette.orange};
-  border: 1px solid ${palette.orange};
+  border: 2px solid ${palette.orangetext};
   width: 282px;
   height: 48px;
   border-radius: 5px;
@@ -172,7 +172,7 @@ function Main() {
           <Text style={{ fontSize: "40px", fontWeight: "700", marginBottom: "70px" }}>덕성의 동아리, 쉽고 빠르게 탐험하다</Text>
           <Text style={{ fontSize: "70px", fontWeight: "700", marginBottom: "90px" }}>DS Explorer</Text>
           <Button>
-            <Img src={rocket} alt="로켓이미지" style={{ width: "33px", height: "24px" }} />
+            <Img src={rocket} alt="로켓이미지" style={{ width: "28px", height: "28px", marginRight: "10px" }} />
             탐험하기
           </Button>
         </Left>

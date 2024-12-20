@@ -167,7 +167,7 @@ function Recruitment() {
             <I.Contents>
               <I.Sequence>
                 <I.Number style={{ marginBottom: "160px" }}>01</I.Number>
-                <I.Number style={{ marginBottom: "265px" }}>02</I.Number>
+                <I.Number style={{ marginBottom: "300px" }}>02</I.Number>
                 {/* <I.Number>03</I.Number> */}
               </I.Sequence>
               <I.Article>

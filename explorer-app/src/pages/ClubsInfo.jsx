@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import paper from "../img/pencil_writing.png";
@@ -7,13 +8,16 @@ import expantion from "../img/expantion.png";
 import * as I from "../styles/InputStyle";
 import "react-datepicker/dist/react-datepicker.css";
 
-function Recruitment() {
+function ClubInfo() {
   const [isGuideExpanded, setIsGuideExpanded] = useState(false);
   const [isInputExpanded, setIsInputExpanded] = useState(false);
   const [images, setImages] = useState([]);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [timeRange, setTimeRange] = useState([12, 17]);
+  const [selectedDays, setSelectedDays] = useState([]);
+  const [category, setCategory] = useState("");
+  const [contact, setContact] = useState("");
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -38,19 +42,51 @@ function Recruitment() {
     handleFiles(files);
   };
 
-  // 제목 입력 핸들러
-  const handleTitleChange = (e) => {
-    if (e.target.value.length <= 80) {
-      setTitle(e.target.value);
-    }
-  };
-
   const handleTimeChange = (e) => {
     const newValue = parseInt(e.target.value, 10);
     const newRange = [...timeRange];
     const index = e.target.name === "startTime" ? 0 : 1;
     newRange[index] = newValue;
     if (newRange[0] <= newRange[1]) setTimeRange(newRange);
+  };
+
+  const handleTitleChange = (e) => {
+    if (e.target.value.length <= 80) {
+      setTitle(e.target.value);
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!title || !content || !category || !contact || selectedDays.length === 0) {
+      alert("모든 필수 정보를 입력해주세요.");
+      return;
+    }
+
+    const formData = {
+      code: "lion",
+      category,
+      frequency: "more",
+      days: selectedDays,
+      start_time: `${timeRange[0]}:00:00`,
+      end_time: `${timeRange[1]}:00:00`,
+      location: "교내",
+      fee_type: "yearly",
+      fee: 50000,
+      content,
+      image_urls: images,
+      contact,
+    };
+
+    try {
+      const response = await axios.post("http://localhost:8000/clubs/", formData, {
+        headers: { "Content-Type": "application/json" },
+      });
+      alert("동아리 정보가 성공적으로 등록되었습니다!");
+      console.log(response.data);
+    } catch (error) {
+      console.error("등록 실패:", error);
+      alert("등록에 실패했습니다. 다시 시도해주세요.");
+    }
   };
 
   return (
@@ -109,8 +145,10 @@ function Recruitment() {
             <I.Contents>
               <I.Sequence>
                 <I.Number style={{ marginBottom: "160px" }}>01</I.Number>
-                <I.Number style={{ marginBottom: "265px" }}>02</I.Number>
-                <I.Number>03</I.Number>
+                <I.Number style={{ marginBottom: "332px" }}>02</I.Number>
+                <I.Number style={{ marginBottom: "105px" }}>03</I.Number>
+                <I.Number style={{ marginBottom: "160px" }}>04</I.Number>
+                <I.Number style={{ marginBottom: "80px" }}>05</I.Number>
               </I.Sequence>
               <I.Article>
                 <I.Inputbox>
@@ -208,15 +246,54 @@ function Recruitment() {
                       </I.CheckboxGroup>
                     </I.CheckboxDouble>
                   </I.Group>
+                </I.Inputbox>
+                <I.Inputbox style={{ marginTop: "50px" }}>
+                  <I.Text style={{ fontSize: "20px" }}>활동장소</I.Text>
                   <I.Group>
-                    <I.Text3>결과발표</I.Text3>
+                    <I.Text3>활동장소</I.Text3>
+                    <I.CheckboxGroup style={{ width: "265px", marginLeft: "80px" }}>
+                      <I.Checkbox>
+                        <I.Input type="checkbox" id="in" />
+                        <label htmlFor="in">교내</label>
+                      </I.Checkbox>
+                      <I.Checkbox>
+                        <I.Input type="checkbox" id="out" />
+                        <label htmlFor="out">외부 :</label>
+                        <I.Input2 type="text" />
+                      </I.Checkbox>
+                    </I.CheckboxGroup>
+                  </I.Group>
+                </I.Inputbox>
+                <I.Inputbox style={{ marginTop: "50px" }}>
+                  <I.Text style={{ fontSize: "20px" }}>회비정보</I.Text>
+                  <I.Group>
+                    <I.Text3>회비유형</I.Text3>
+                    <I.CheckboxGroup style={{ width: "505px", marginLeft: "80px" }}>
+                      <I.Checkbox>
+                        <I.Input type="checkbox" id="in" />
+                        <label htmlFor="in">연간</label>
+                      </I.Checkbox>
+                      <I.Checkbox>
+                        <I.Input type="checkbox" id="out" />
+                        <label htmlFor="out">월간</label>
+                      </I.Checkbox>
+                      <I.Checkbox>
+                        <I.Input type="checkbox" id="out" />
+                        <label htmlFor="out">1회 납부(특정 활동이나 이벤트에만 필요한 경우)</label>
+                      </I.Checkbox>
+                    </I.CheckboxGroup>
+                  </I.Group>
+                  <I.Group>
+                    <I.Text3>금액입력</I.Text3>
+                    <I.Input2 type="text" style={{ height: "25px", marginLeft: "80px" }} />
+                    <div style={{ fontSize: "15px", fontWeight: "300", color: "#c9c9c9" }}>원(숫자만 입력 가능)</div>
                   </I.Group>
                 </I.Inputbox>
                 <I.Inputbox style={{ marginTop: "50px" }}>
                   <I.Text style={{ fontSize: "20px" }}>문의사항</I.Text>
                   <I.Group>
                     <I.Text3>연락처/링크</I.Text3>
-                    <I.Input type="text" placeholder="입력해주세요" style={{ width: "192px" }} />
+                    <I.Input type="text" placeholder="입력해주세요" style={{ width: "177px" }} />
                   </I.Group>
                 </I.Inputbox>
               </I.Article>
@@ -248,15 +325,14 @@ function Recruitment() {
           </I.Title>
           <I.Textarea placeholder="내용을 입력해주세요." value={content} onChange={(e) => setContent(e.target.value)} />
         </I.WriteBox>
+        <I.Submission style={{ margin: "70px" }}>
+          <I.CancelButton>삭제</I.CancelButton>
+          <I.SubmitButton onClick={handleSubmit}>등록</I.SubmitButton>
+        </I.Submission>
       </I.Main>
-
-      <I.Submission style={{ margin: "70px" }}>
-        <I.CancelButton>삭제</I.CancelButton>
-        <I.SubmitButton>등록</I.SubmitButton>
-      </I.Submission>
       <Footer />
     </>
   );
 }
 
-export default Recruitment;
+export default ClubInfo;

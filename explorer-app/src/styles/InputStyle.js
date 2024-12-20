@@ -88,7 +88,6 @@ export const ExpandableContent = styled.div`
 
 export const Contents = styled.div`
   width: 100%;
-  height: 600px;
   display: flex;
   flex-direction: row;
   align-items: start;
@@ -142,6 +141,25 @@ export const Input = styled.input`
   &::placeholder {
     color: #c5c5c9; /* 플레이스홀더 색상 */
   }
+
+  &:focus {
+    border-color: #c5c5c9; /* 클릭 시 테두리 색상 유지 */
+    box-shadow: none; /* 클릭 시 생기는 외곽선 제거 */
+  }
+`;
+
+export const Input2 = styled.input`
+  width: 105px;
+  height: 30px;
+  font-size: 12px;
+  border: none;
+  border-bottom: 1px solid #c5c5c9;
+  padding-left: 5px;
+  background-color: transparent; /* 배경색 투명 */
+  color: #c5c5c9;
+  outline: none; /* 클릭 시 테두리 제거 */
+  caret-color: #c5c5c9; /* 커서 색상 */
+  margin: 0;
 
   &:focus {
     border-color: #c5c5c9; /* 클릭 시 테두리 색상 유지 */
@@ -500,13 +518,14 @@ export const TimeRange = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
 
   input[type="range"] {
-    width: 300px;
+    width: 200px;
     margin: 5px;
   }
   div {
-    margin-top: 10px;
+    margin-left: 30px;
     color: #c5c5c9;
   }
 `;
