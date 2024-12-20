@@ -45,7 +45,7 @@ function Profile() {
     <>
       <div className="mypage">
         <div className="profile-box">
-          <img src={profileSetting} alt="설정" className="profile-settings" />
+          <img src={profileSetting} alt="설정" className="profile-settings" onClick={() => navigate(`/users/profile/:student_id/profileEdit`)} />
           <img
             src={profileImage}
             alt="프로필"
