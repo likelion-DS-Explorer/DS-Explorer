@@ -19,7 +19,6 @@ const Content = styled.div`
 function RecruitDetail() {
   return (
     <>
-      <Header type="default" />
       <Content>
         <RecruitDetailComponent />
       </Content>

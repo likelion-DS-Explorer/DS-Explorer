@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from "../components/Header";
 import ScrapAnnouncementItem from '../components/MyPage/ScrapAnnouncementItem';
@@ -16,52 +16,55 @@ import clubHeartIcon from '../img/clubHeartIcon.png';
 
 function Profile() {
   const [isPopupVisible, setPopupVisible] = useState(false);
+  const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
 
-  // 임시 데이터
-  const placeholderProfileData = {
-    name: "홍길동",
-    student_id: "20230733",
-    major: "디지털소프트웨어공학부",
-    image: profileImage,
-  };
+  useEffect(() => {
+    const storedUserData = localStorage.getItem("userData");
+    console.log("storedUserData:", storedUserData); // 디버깅용 로그
+    if (storedUserData && storedUserData !== "undefined") {
+      try {
+        const parsedData = JSON.parse(storedUserData);
+        console.log("파싱된 userData:", parsedData); // 파싱 결과 확인
+        setUserData(parsedData);
+      } catch (error) {
+        console.error("JSON 파싱 오류:", error);
+        setUserData(null);
+      }
+    } else {
+      console.warn("userData가 없습니다. 로그인 페이지로 이동");
+      navigate("/users/login"); // 로그인 페이지로 이동
+    }
+  }, [navigate]);
 
-  const placeholderScrapAnnouncements = [
-    { image: scrapIcon, clubName: "멋쟁이사자처럼", announcementTitle: "🦁 12기 아기사자 모집 안내 🦁" },
-    { image: scrapIcon, clubName: "멋쟁이사자처럼", announcementTitle: "🦁 11기 아기사자 모집 안내 🦁" },
-    { image: scrapIcon, clubName: "멋쟁이사자처럼", announcementTitle: "🦁 10기 아기사자 모집 안내 🦁" },
-  ];
-
-  const placeholderFavoriteClubs = [
-    { image: clubHeartIcon, clubName: "멋쟁이사자처럼", description: "테크 기반의 아이디어 실현을 위한 창업 동아리" },
-    { image: clubHeartIcon, clubName: "해커톤 마스터", description: "전국 해커톤을 제패한 실력파 동아리" },
-  ];
+  if (!userData) {
+    return <div>로딩 중...</div>;
+  }
 
   return (
     <>
-      <Header type="default" />
       <div className="mypage">
         <div className="profile-box">
           <img src={profileSetting} alt="설정" className="profile-settings" />
           <img
-            src={placeholderProfileData.image}
+            src={profileImage}
             alt="프로필"
             className="profile-image"
           />
-          <h2 className="profile-name">{placeholderProfileData.name}</h2>
-          <p className="profile-info">{placeholderProfileData.student_id}</p>
-          <p className="profile-info">{placeholderProfileData.major}</p>
+          <h2 className="profile-name">{userData.name || "이름 없음"}</h2>
+          <p className="profile-info">{userData.student_id}</p>
+          <p className="profile-info">{userData.major}</p>
           <div className="profile-stats">
             <div
               className="stat-item"
-              onClick={() => navigate(`/users/profile/${placeholderProfileData.student_id}/apply/`)}
+              onClick={() => navigate(`/users/profile/${userData.student_id}/apply/`)}
             >
               <img src={applyIcon} alt="지원 동아리" className="stat-icon" />
               <span className="stat-title">지원 동아리</span>
             </div>
             <div
               className="stat-item"
-              onClick={() => navigate(`/users/profile/${placeholderProfileData.student_id}/affiliated-clubs/`)}
+              onClick={() => navigate(`/users/profile/${userData.student_id}/affiliated-clubs/`)}
             >
               <img src={belongIcon} alt="소속 동아리" className="stat-icon" />
               <span className="stat-title">소속 동아리</span>
@@ -76,7 +79,7 @@ function Profile() {
             </button>
             <button
               className="edit-post-button"
-              onClick={() => navigate(`/users/profile/${placeholderProfileData.student_id}/editpost/`)}
+              onClick={() => navigate(`/users/profile/${userData.student_id}/editpost/`)}
             >
               수정하기
             </button>
@@ -105,8 +108,9 @@ function Profile() {
             </div>
           </div>
         </div>
+        
 
-        <div className="content-container">
+        {/* <div className="content-container">
           <div className="section-container">
             <div className="section-header">
               <img src={scrapIcon} alt="스크랩 공고 아이콘" className="section-icon" />
@@ -140,7 +144,7 @@ function Profile() {
               ))}
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );

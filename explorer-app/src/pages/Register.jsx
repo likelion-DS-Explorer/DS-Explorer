@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import exploreBtn from "../img/exploreBtn.png";
 import backBtn from "../img/backBtn.png";
+import axios from "axios"; // Axios 추가
 
 const Content = styled.div`
   font-family: 'DMSansMedium', sans-serif;
@@ -28,7 +29,7 @@ const Description = styled.p`
   color: #ffffff80;
 `;
 
-const EmailPW = styled.form`
+const EmailPW = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -231,10 +232,57 @@ const ModalBtn2 = styled(ModalBtn)`
 `;
 
 function Register(props) {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    name: "",
+    student_id: "",
+    major: "",
+    nickname: "",
+    cp_number: "",
+    is_manager: "",
+  });
+  
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
+
   const [page, setPage] = useState(1);
   const [flag, setFlag] = useState(0);
   const [flag2, setFlag2] = useState(0);
   const navigate = useNavigate();
+
+  const [isEmailDuplicate, setIsEmailDuplicate] = useState(null); // null: 초기 상태, true/false: 중복 여부
+  const [emailCheckMessage, setEmailCheckMessage] = useState(""); // 메시지 상태
+
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    console.log("회원가입 버튼이 클릭되었습니다.");
+    console.log("보내는 데이터:", formData);
+  
+    try {
+      // Axios POST 요청
+      const response = await axios.post("http://127.0.0.1:8000/users/register/", formData);
+      console.log("회원가입 성공:", response.data);
+
+      localStorage.setItem("userData", JSON.stringify(response.data)); // 수정된 부분
+      console.log("저장된 userData:", response.data);
+
+      setSuccess(true); // 성공 상태 설정
+      setPage(3); // 페이지 변경
+    } catch (err) {
+      // 에러 처리
+      const errorMessage = err.response?.data?.message || err.response?.data || "회원가입 중 오류가 발생했습니다.";
+      console.error("회원가입 실패:", errorMessage);
+      setError(errorMessage);
+    }
+  };  
+  
 
   const goToNextPage = () => {
     setPage(2);
@@ -258,20 +306,24 @@ function Register(props) {
 
   return (
     <>
-      <Header type="default" />
       <Content>
         <Title>DS Explorer에 오신 것을 환영합니다!</Title>
         <Description>함께 동아리 탐험을 시작해 봐요. 새로운 우주가 여러분을 기다리고 있어요.</Description>
-        <InputInfo>
+        <InputInfo onSubmit={handleRegister}>
           {page === 1 && (
             <EmailPW>
               <InputBlock>
                 <Label>이메일을 입력해 주세요</Label>
                 <EmailDiv>
                   <Input1Div>
-                  <Input1 type="email" name="email" />
-                  <Button type="button">중복 확인하기</Button>
+                  <Input1 
+                    type="email"
+                    name="email"
+                    placeholder="이메일"
+                    value={formData.email}
+                    onChange={handleChange} />
                   </Input1Div>
+                  {error && <p style={{ color: "red" }}>{error}</p>}
                   {flag === 1 && (<Warning>입력하신 이메일은 이미 계정에 연결되어 있습니다. 로그인하시거나 비밀번호를 재설정해 주세요.</Warning>)}
                   {flag === 2 && (<Comment>사용 가능한 계정입니다. </Comment>)}
                 </EmailDiv>
@@ -279,7 +331,12 @@ function Register(props) {
               <InputBlock>
                 <Label>비밀번호를 입력해 주세요</Label>
                 <Input1Div>
-                  <Input1 type="password" name="pw" />
+                  <Input1 
+                    type="password"
+                    name="password"
+                    placeholder="비밀번호"
+                    value={formData.password}
+                    onChange={handleChange} />
                   <Button type="button" onClick={goToNextPage}>
                     계속하기
                   </Button>
@@ -294,24 +351,50 @@ function Register(props) {
               <PersonalInfo>
                 <InputBlock>
                   <Label htmlFor="name">이름</Label>
-                  <Input2 type="text" name="name" />
+                  <Input2 
+                  type="text"
+                  name="name"
+                  placeholder="이름"
+                  value={formData.name}
+                  onChange={handleChange} />
                 </InputBlock>
                 <InputBlock>
                   <Label htmlFor="stdid">학번</Label>
-                  <Input2 type="text" name="stdid" />
+                  <Input2
+                  type="text"
+                  name="student_id"
+                  placeholder="학번"
+                  value={formData.student_id}
+                  onChange={handleChange} 
+                   />
                 </InputBlock>
                 <InputBlock>
                   <Label htmlFor="major">학과</Label>
-                  <Input2 type="text" name="major" />
+                  <Input2 
+                  type="text"
+                  name="major"
+                  placeholder="학과"
+                  value={formData.major}
+                  onChange={handleChange} />
                 </InputBlock>
                 <InputBlock>
                   <Label htmlFor="nickname">닉네임</Label>
-                  <Input2 type="text" name="nickname" />
+                  <Input2 
+                  type="text"
+                  name="nickname"
+                  placeholder="닉네임"
+                  value={formData.nickname}
+                  onChange={handleChange} />
                   {flag2 === 1 && (<Warning2>이 닉네임은 이미 사용 중입니다. 다른 닉네임을 선택해 주세요.</Warning2>)}
                 </InputBlock>
                 <InputBlock>
                   <Label htmlFor="phone">전화번호</Label>
-                  <Input2 type="phone" name="phone" />
+                  <Input2 
+                  type="text"
+                  name="cp_number"
+                  placeholder="전화번호"
+                  value={formData.cp_number}
+                  onChange={handleChange} />
                 </InputBlock>
                 <InputBlock></InputBlock>
               </PersonalInfo>
@@ -320,7 +403,12 @@ function Register(props) {
                   <Label htmlFor="club">
                     <LabelStrong>운영진이신가요?</LabelStrong> 운영진이라면 소속 동아리명을 작성해 주세요. 모집 공고와 활동 소식 작성 권한이 부여됩니다.
                   </Label>
-                  <InputLong type="text" name="club" />
+                  <InputLong
+                  type="text"
+                  name="is_manager"
+                  placeholder="운영진 소속 동아리"
+                  value={formData.is_manager}
+                  onChange={handleChange} />
                 </InputBlock>
               </ClubInfo>
               </InputDiv>
@@ -329,7 +417,7 @@ function Register(props) {
                   <img src={backBtn} alt="이전" />
                   <ButtonName>이전</ButtonName>
                 </Back>
-                <Submit type="button" onClick={handleSignup}>
+                <Submit type="submit">
                   회원가입
                 </Submit>
                 <BtnBlk></BtnBlk>

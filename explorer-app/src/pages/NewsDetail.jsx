@@ -50,7 +50,6 @@ function NewsDetail() {
 
   return (
     <>
-      <Header type="default" />
       <div className="session-detail-container">
         <h1 className="session-detail-title">
           {newsData.title || "제목 없음"}

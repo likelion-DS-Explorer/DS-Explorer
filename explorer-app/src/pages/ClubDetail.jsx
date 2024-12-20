@@ -124,7 +124,6 @@ function ClubDetail() {
 
   return (
     <>
-      <Header type="default" />
     <Content>
       <Title>ssss</Title>
       <Notification>

@@ -99,7 +99,6 @@ const Submit = styled.button`
 function ProfileEdit() {
   return (
     <>
-      <Header type="default" />
       <Content>
         <Title>회원정보</Title>
         <RecentEdit>최근 수정일 ~~</RecentEdit>

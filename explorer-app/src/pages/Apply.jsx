@@ -89,7 +89,6 @@ function Apply() {
 
   return (
     <>
-      <Header type="default" />
       <div className="application-status-page">
         <div className="application-status-container">
           <div className="header-section">

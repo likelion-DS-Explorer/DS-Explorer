@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Header from "../components/Header";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 //아이디 찾기랑 비밀번호 찾기 링크를 몰라서 find00으로 넣어뒀습니다!
 
@@ -86,24 +87,65 @@ const Signup = styled(Link)`
   font-weight: 800;
 `;
 
-function Login() {
+function Login({ setIsLoggedIn }) {
   const navigate = useNavigate();
+  const [email, setEmail] = useState(""); // 이메일 상태
+  const [password, setPassword] = useState(""); // 비밀번호 상태
+  const [error, setError] = useState(null); // 오류 메시지 상태
+
+  const handleLogin = async (e) => {
+    e.preventDefault(); // 폼 기본 동작 방지
+
+    console.log(email, password);
+
+    try {
+      const response = await axios.post("http://127.0.0.1:8000/users/login/", {
+        username: email,
+        password: password,
+      });
+    
+      console.log("로그인 성공:", response.data);
+    
+      if (!response.data.user) {
+        console.warn("로그인 응답에 user 데이터가 없습니다.");
+      }
+    
+      // user 데이터가 있으면 저장, 없으면 경고
+      localStorage.setItem("userData", JSON.stringify(response.data.user || {}));
+      localStorage.setItem("token", response.data.token);
+      console.log("저장된 userData:", localStorage.getItem("userData"));
+    
+      setIsLoggedIn(true);
+      navigate("/");
+    } catch (err) {
+      console.error("로그인 실패:", err);
+      setError("이메일 또는 비밀번호가 잘못되었습니다.");
+    }
+    
+  };
+
 
   return (
     <>
-      <Header type="default" />
       <Content>
         <Title>
           로그인 후 다양한 서비스를 이용해 보세요.
           <Description>아직 DS explorer : 동아리 탐험대 회원이 아니시면, 지금 회원가입을 해주세요.</Description>
         </Title>
-        <LoginForm>
+        <LoginForm onSubmit={handleLogin}>
           <InputBlock>
-            <Input type="text" placeholder="아이디"></Input>
-            <Input type="text" placeholder="비밀번호"></Input>
+            <Input type="email"
+              placeholder="아이디"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}></Input>
+            <Input type="password"
+              placeholder="비밀번호"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}></Input>
           </InputBlock>
           <Submit type="submit">로그인</Submit>
         </LoginForm>
+        {error && <p style={{ color: "red" }}>{error}</p>}
         <LinkDiv>
           <Signup type="button" onClick={() => navigate("/users/register/")}>
             회원가입

@@ -115,40 +115,67 @@ function SearchBox() {
   );
 }
 
-function Header({ type }) {
+function Header({ type, isLoggedIn, setIsLoggedIn  }) {
   const navigate = useNavigate();
 
   const handleNavigation = (path) => {
     navigate(path);
   };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    navigate("/users/login/");
+  };
+
   return (
     <Container>
       {type === "home" && (
         <Home>
-          <Img src={mainLogo} alt="동아리탐험대" />
+          <Img src={mainLogo} alt="동아리탐험대" onClick={() => handleNavigation("/")}/>
           <Nav>
             <Navbar onClick={() => handleNavigation("/recruit")}>모집 공고</Navbar>
-            <Navbar onClick={() => handleNavigation("/session")}>활동 소식</Navbar>
-            <Navbar onClick={() => handleNavigation("/inquiry")}>문의</Navbar>
-            <Navbar onClick={() => handleNavigation("/mypage")}>마이페이지</Navbar>
+            <Navbar onClick={() => handleNavigation("/news")}>활동 소식</Navbar>
+            <Navbar onClick={() => handleNavigation("/users/profile/:student_id/")}>마이페이지</Navbar>
           </Nav>
-          <Button onClick={() => handleNavigation("/login")} style={{ backgroundColor: "#1B253E", marginRight: "24px" }}>
-            로그인
-          </Button>
-          <Button onClick={() => handleNavigation("/signup")} style={{ border: "1px solid #1B253E" }}>
-            회원가입
-          </Button>
+          {isLoggedIn ? (
+            <Button onClick={handleLogout} style={{ backgroundColor: "#1B253E", marginRight: "24px" }}>
+              로그아웃
+            </Button>
+          ) : (
+            <>
+              <Button onClick={() => handleNavigation("/users/login/")} style={{ backgroundColor: "#1B253E", marginRight: "24px" }}>
+                로그인
+              </Button>
+              <Button onClick={() => handleNavigation("/users/register/")} isOutline>
+                회원가입
+              </Button>
+            </>
+          )}
         </Home>
       )}
       {type === "default" && (
         <Default>
-          <SearchBox></SearchBox>
           <Img src={mainLogo} alt="동아리탐험대" />
           <Nav style={{ width: "23vw", margin: "0", justifyContent: "space-evenly" }}>
-            <Navbar onClick={() => handleNavigation("/notice")}>모집 공고</Navbar>
-            <Navbar onClick={() => handleNavigation("/session")}>활동 소식</Navbar>
-            <Navbar onClick={() => handleNavigation("/mypage")}>마이페이지</Navbar>
+            <Navbar onClick={() => handleNavigation("/recruit")}>모집 공고</Navbar>
+            <Navbar onClick={() => handleNavigation("/news")}>활동 소식</Navbar>
+            <Navbar onClick={() => handleNavigation("/users/profile/:student_id/")}>마이페이지</Navbar>
           </Nav>
+          {isLoggedIn ? (
+            <Button onClick={handleLogout} style={{ backgroundColor: "#1B253E", marginRight: "24px" }}>
+              로그아웃
+            </Button>
+          ) : (
+            <>
+              <Button onClick={() => handleNavigation("/users/login/")} style={{ backgroundColor: "#1B253E", marginRight: "24px" }}>
+                로그인
+              </Button>
+              <Button onClick={() => handleNavigation("/users/register/")} isOutline>
+                회원가입
+              </Button>
+            </>
+          )}
         </Default>
       )}
     </Container>

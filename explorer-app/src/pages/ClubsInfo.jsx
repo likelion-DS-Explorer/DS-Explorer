@@ -55,7 +55,6 @@ function Recruitment() {
 
   return (
     <>
-      <Header type="default" />
       <I.Main>
         {/* 모집공고 작성 가이드 */}
         <I.Box>

@@ -12,21 +12,27 @@ function Recruit() {
   const [currentPage, setCurrentPage] = useState(0); // 현재 페이지
   const itemsPerPage = 8; // 페이지당 아이템 수
 
-  // API 호출
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("http://127.0.0.1:8000/recruit/");
-        setRecruitData(response.data.result); // API에서 result 키의 데이터를 가져옴
-      } catch (err) {
-        console.error("API 호출 에러:", err);
-        setError("모집 공고 데이터를 불러오지 못했습니다.");
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
+// API 호출
+useEffect(() => {
+  const fetchData = async () => {
+    const token = localStorage.getItem("token"); // 로컬 스토리지에서 토큰 가져오기
+    try {
+      const response = await axios.get("http://127.0.0.1:8000/recruit/", {
+        headers: token
+          ? { Authorization: `Token ${token}` } // 토큰이 있는 경우 Authorization 헤더 추가
+          : {}, // 토큰이 없을 경우 헤더 비우기
+      });
+      setRecruitData(response.data.result); // 서버로부터 받은 데이터 저장
+    } catch (err) {
+      console.error("API 호출 에러:", err.response?.data || err.message);
+      setError("모집 공고 데이터를 불러오지 못했습니다.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchData();
+}, []);
 
   // 데이터가 비었을 때도 기본 UI 표시
   const totalPages = Math.ceil(Math.max(recruitData.length, 1) / itemsPerPage); // 최소 1페이지
@@ -55,7 +61,6 @@ function Recruit() {
 
   return (
     <>
-      <Header type="default" />
       <div className="notice-page">
         <div className="filter-container">
           <Filter

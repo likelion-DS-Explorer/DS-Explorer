@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -20,14 +20,17 @@ function Recruitment() {
   const [startDate2, setStartDate2] = useState(null);
   const [startDate3, setStartDate3] = useState(null);
 
-  const handleTestApi = async () => {
-    try {
-      const response = await axios.get("http://localhost:3000/recruit");
-      console.log("API 테스트 성공:", response.data);
-    } catch (error) {
-      console.error("API 테스트 실패:", error);
-    }
-  };
+  function Recruitment() {
+    const [userData, setUserData] = useState({});
+  
+    useEffect(() => {
+      const storedUserData = JSON.parse(localStorage.getItem("userData") || "{}");
+      setUserData(storedUserData);
+    }, []);
+  
+    console.log("User data:", userData);
+    return <div>{userData.name || "유저 이름이 없습니다"}</div>;
+  }
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -61,6 +64,7 @@ function Recruitment() {
 
   // API 연동 - 모집공고 등록
   const handleSubmit = async () => {
+    const token = localStorage.getItem("token");
     if (!title || !content || !startDate1 || !startDate2) {
       alert("필수 정보를 모두 입력해주세요.");
       return;
@@ -83,22 +87,27 @@ function Recruitment() {
     formData.append("start_interview", startDate1.toISOString().split("T")[0]); // 예시 값
     formData.append("end_interview", startDate2.toISOString().split("T")[0]); // 예시 값
     formData.append("recruit_result", startDate3 ? startDate3.toISOString().split("T")[0] : "");
-    formData.append("title", title);
-    formData.append("content", content);
+    formData.append("title", title || "");
+    formData.append("content", content || "");
 
     images.forEach((image, index) => {
       formData.append(`image_${index}`, image); // 이미지 파일 추가
     });
 
     try {
-      const response = await axios.post("http://localhost:3000/recruit", formData, {
+      const response = await axios.post("http://127.0.0.1:8000/recruit/", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
+          Authorization: `Token ${token}`,
         },
       });
       alert("모집공고가 성공적으로 등록되었습니다.");
       console.log(response.data);
     } catch (error) {
+      if (error.respons) {
+        console.error("백엔드 에러:", error.response.data);
+        alert(`등록 실패: ${JSON.stringify(error.response.data)}`);
+      }
       console.error("등록 실패:", error);
       alert("등록에 실패했습니다. 다시 시도해주세요.");
     }
@@ -106,7 +115,6 @@ function Recruitment() {
 
   return (
     <>
-      <Header type="default" />
       <I.Main>
         {/* 모집공고 작성 가이드 */}
         <I.Box>
@@ -311,8 +319,6 @@ function Recruitment() {
         <I.CancelButton>삭제</I.CancelButton>
         <I.SubmitButton onClick={handleSubmit}>등록</I.SubmitButton>
       </I.Submission>
-      {/* API 테스트 버튼 */}
-      <button onClick={handleTestApi}>API 연동 테스트</button>
       <Footer />
     </>
   );

@@ -166,7 +166,6 @@ function Main() {
 
   return (
     <>
-      <Header type="home" />
       <Section1>
         <Left>
           <Text style={{ fontSize: "40px", fontWeight: "700", marginBottom: "70px" }}>덕성의 동아리, 쉽고 빠르게 탐험하다</Text>

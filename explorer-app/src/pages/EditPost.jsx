@@ -51,7 +51,6 @@ function EditPost() {
 
   return (
     <>
-      <Header type="default" />
       <div className="edit-post-page-container">
         <div className="edit-post-content">
           <div className="edit-header-section">

@@ -79,7 +79,6 @@ function News() {
 
   return (
     <>
-      <Header type="default" />
       <div className="session-news-page">
         <div className="session-header">
           <h1 className="session-title">동아리에서 이뤄진 활동을 여기서 확인하세요!</h1>

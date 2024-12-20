@@ -45,7 +45,6 @@ const ClubItem = styled.div`
 function ClubList() {
   return (
     <>
-      <Header type="default" />
       <Content>
         <Title>전체 동아리 탐험</Title>
         <Description>

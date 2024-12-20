@@ -77,7 +77,6 @@ function AffiliatedClubs() {
 
   return (
     <>
-      <Header type="default" />
       <div className="affiliated-clubs-page-container">
         <div className="affiliated-clubs-content">
           <div className="affiliated-header-section">

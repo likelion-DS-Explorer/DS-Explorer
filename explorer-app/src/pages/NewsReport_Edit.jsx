@@ -94,7 +94,6 @@ function NewsReport_Edit({ match }) {
 
   return (
     <>
-      <Header type="default" />
       <I.Main>
         {/* 활동기록 작성 가이드 */}
         <I.Box>
